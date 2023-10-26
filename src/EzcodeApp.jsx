@@ -1,4 +1,4 @@
-import { ChangeNav } from "./ezcode/components/changeNav"
+import { ChangeNav } from "./ezcode/components/ChangeNav"
 import { AppRouter } from "./router/AppRouter"
 import { AppTheme } from "./theme"
 
