@@ -25,6 +25,14 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
         });
     }
 
+    const onInputCodeChange = ({ target }) => {
+        const { name, value } = target;
+        setFormState({
+            ...formState,
+            [name]: value
+        });
+    }
+
     const onResetForm = () => {
         setFormState(initialForm);
     }
