@@ -167,7 +167,7 @@ export const PanelProfesor = () => {
       });
 
       if (result.isConfirmed) {
-        const response = await ezcodeApi.delete(`profe/${userId}`);
+        const response = await ezcodeApi.delete(`profesor/${userId}`);
         if (response.status === 200) {
           Swal.fire('Borrado', 'El usuario ha sido borrado correctamente', 'success');
           localStorage.clear();
