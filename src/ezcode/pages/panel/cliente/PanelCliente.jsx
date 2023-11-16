@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
 import { jwtDecode } from "jwt-decode";
 import ezcodeApi from '../../../../api/ezcodeApi';
@@ -16,6 +17,7 @@ export const PanelCliente = () => {
   const [otpVerified, setOtpVerified] = useState(false)
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const [imagen, setImagen] = useState('');
+  const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
