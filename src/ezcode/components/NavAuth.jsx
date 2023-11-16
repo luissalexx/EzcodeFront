@@ -1,52 +1,15 @@
-import { Link } from 'react-router-dom';
-import { styled, alpha } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
+import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Menu, MenuItem, InputBase, Typography, IconButton, Toolbar, Box, AppBar } from '@mui/material';
+import { Menu, MenuItem, InputBase, IconButton, Toolbar, Box, AppBar, Typography, Stack, Link } from '@mui/material';
 import { useState } from 'react';
 import logo from './logo.png'
 
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
-}));
 
 export const NavAuth = () => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate()
+    const tipo = localStorage.getItem('tipo')
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -58,6 +21,32 @@ export const NavAuth = () => {
     const handleOnClick = () => {
         handleMenuClose();
         handleLogout();
+    }
+
+    const handlePanelClick = () => {
+        handleMenuClose();
+        switch (tipo) {
+            case "Alumno":
+                navigate('/user/', {
+                    replace: true
+                });
+                break;
+            case "Profesor":
+                navigate('/profesor/', {
+                    replace: true
+                });
+                break;
+            case "Administrador":
+                navigate('/admin/', {
+                    replace: true
+                });
+                break;
+            default:
+                navigate('/', {
+                    replace: true
+                });
+                break;
+        }
     }
 
     const handleProfileMenuOpen = (event) => {
@@ -85,7 +74,7 @@ export const NavAuth = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Panel de cuenta</MenuItem>
+            <MenuItem onClick={handlePanelClick}>Panel de cuenta</MenuItem>
             <MenuItem onClick={handleOnClick}>Cerrar Sesión</MenuItem>
         </Menu>
     );
@@ -94,29 +83,25 @@ export const NavAuth = () => {
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
-                        size="large"
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
                         sx={{ mr: 2 }}
                     >
+                        <Link color='inherit' to="/">
+                            <img src={logo} alt="example" width="50" height="50" />
+                        </Link>
                     </IconButton>
-                    <Link color='inherit' to="/">
-                        <img src={logo} alt="example" width="50" height="50" />
+
+                    <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                        EZECODE
+                    </Typography>
+
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/" sx={{ flexGrow: 1 }}>
+                        Buscar Cursos
                     </Link>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box >
                         <IconButton
-                            size="large"
                             edge="end"
                             aria-label="account of current user"
                             aria-controls={menuId}
@@ -124,7 +109,7 @@ export const NavAuth = () => {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle fontSize='large' />
                         </IconButton>
                     </Box>
                 </Toolbar>

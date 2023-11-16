@@ -7,7 +7,6 @@ import PhoneInput from 'react-phone-input-2';
 import ezcodeApi from '../../api/ezcodeApi';
 import { TabContext, TabPanel, TabList } from '@mui/lab';
 import 'react-phone-input-2/lib/style.css'
-
 import Swal from 'sweetalert2'
 
 const formData = {
@@ -33,7 +32,6 @@ export const RegisterPage = () => {
   const [sexo, setSexo] = useState();
   const [otp, setOtp] = useState("");
   const [otpVerified, setOtpVerified] = useState(false)
-  const [otpSend, setOtpSend] = useState(false)
 
 
   const handleTabChange = (event, newValue) => {
@@ -97,6 +95,11 @@ export const RegisterPage = () => {
     try {
       const data = await ezcodeApi.post('auth/send-code', { celular: celular })
       console.log(data)
+      Swal.fire({
+        title: "Codigo enviado",
+        text: "Revisa los mensajes SMS de tu celular",
+        icon: "success"
+      });
     } catch (error) {
       console.log(error.response.data)
     }
@@ -106,9 +109,17 @@ export const RegisterPage = () => {
     event.preventDefault();
     try {
       const data = await ezcodeApi.post('auth/verify-code', { celular: celular, otp: otp })
-        setOtpVerified(true)
+      setOtpVerified(true)
+      Swal.fire({
+        title: "Celular verificado!",
+        icon: "success"
+      });
     } catch (error) {
-      console.log(error)
+      Swal.fire({
+        title: "Hubo un problema con el codigo introducido",
+        text: { error },
+        icon: "success"
+      });
     }
   }
 
@@ -169,7 +180,9 @@ export const RegisterPage = () => {
                 </Grid>
 
                 <Grid item xs={12} sx={{ mt: 2 }}>
+                  <label htmlFor="celular">Celular</label>
                   <PhoneInput
+                    disabled={otpVerified == true}
                     country={'mx'}
                     placeholder='Celular'
                     fullWidth
@@ -232,6 +245,7 @@ export const RegisterPage = () => {
             <Grid container>
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <TextField
+                  disabled={otpVerified == true}
                   label="Codigo"
                   type="text"
                   placeholder='Ingrese el codigo'

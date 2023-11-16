@@ -1,12 +1,49 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { HomePage } from "../pages/HomePage"
+import { PanelCliente } from "../pages/panel/cliente/PanelCliente"
+import { PanelProfesor } from "../pages/panel/profesor/PanelProfesor"
+import { PanelAdmin } from "../pages/panel/administrador/PanelAdmin"
+
 
 export const EzcodeRoutes = () => {
-  return (
-    <Routes>
-        <Route path="/" element={<HomePage />} />
+  const tipo = localStorage.getItem('tipo')
 
+  if (tipo == 'Alumno') {
+    return (
+      <Routes>
+        <Route path="/user/" element={<PanelCliente />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<Navigate to="/" />} />
+      </Routes>
+    )
+  }
+
+  if (tipo == 'Profesor') {
+    return (
+      <Routes>
+        <Route path="/profesor/" element={<PanelProfesor />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/*" element={<Navigate to="/" />} />
+      </Routes>
+    )
+  }
+
+  if (tipo == 'Administrador') {
+    return (
+      <Routes>
+        <Route path="/admin/" element={<PanelAdmin />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/*" element={<Navigate to="/" />} />
+      </Routes>
+    )
+  }
+
+  if (tipo == null) {
+    return (
+      <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
-  )
+    )
+  }
 }

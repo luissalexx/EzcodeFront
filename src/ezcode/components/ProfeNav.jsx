@@ -1,9 +1,9 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Toolbar, Box, AppBar, Link, Typography, Stack, IconButton } from '@mui/material';
+import { IconButton, Toolbar, Box, AppBar, Link } from '@mui/material';
 import logo from './logo.png'
 
 
-export const NavNotAuth = () => {
+export const ProfeNav = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -12,9 +12,9 @@ export const NavNotAuth = () => {
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        sx={{ mr: 1 }}
+                        sx={{ mr: 2 }}
                     >
-                        <Link component={RouterLink} color='inherit' to="/">
+                        <Link color='inherit' component={RouterLink} to="/">
                             <img src={logo} alt="example" width="50" height="50" />
                         </Link>
                     </IconButton>
@@ -23,12 +23,12 @@ export const NavNotAuth = () => {
                         EZECODE
                     </Typography>
 
-                    <Stack direction='row' spacing={2}>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/auth/login">
-                            Inicia Sesión
+                    <Stack direction='row' spacing={2} sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} color='inherit' to="/profe/" >
+                            Perfil
                         </Link>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/">
-                            Buscar Cursos
+                        <Link variant='h6' component={RouterLink} color='inherit' to="/profe/solicitudes">
+                            Solicitudes
                         </Link>
                     </Stack>
                 </Toolbar>

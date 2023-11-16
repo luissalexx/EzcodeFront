@@ -1,7 +1,11 @@
 import { Typography } from "@mui/material"
+import { ChangeNav } from "../components/ChangeNav"
 
 export const HomePage = () => {
   return (
-    <Typography variant="h1">HomePage</Typography>
+    <div>
+      <ChangeNav />
+      <Typography variant="h1">HomePage</Typography>
+    </div>
   )
 }
