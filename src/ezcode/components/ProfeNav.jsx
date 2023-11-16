@@ -1,5 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { IconButton, Toolbar, Box, AppBar, Link } from '@mui/material';
+import { IconButton, Toolbar, Box, AppBar, Link, Stack } from '@mui/material';
+import { Typography } from '@mui/material';
 import logo from './logo.png'
 
 

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
 import { jwtDecode } from "jwt-decode";
 import ezcodeApi from '../../../../api/ezcodeApi';
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2';
-import Avatar from '@mui/material/Avatar';
-import PersonIcon from '@mui/icons-material/Person';
 import Swal from 'sweetalert2'
 import { ProfeNav } from '../../../components/ProfeNav';
 
@@ -14,6 +12,7 @@ export const PanelProfesor = () => {
   const [otp, setOtp] = useState("");
   const [otpVerified, setOtpVerified] = useState(false)
   const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const [imagen, setImagen] = useState('');
 
   const token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
@@ -46,21 +45,22 @@ export const PanelProfesor = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await ezcodeApi.get(`uploads/administradors/${userId}`);
-        const imageDataFromServer = response.data.pathImagen;
+        const response = await ezcodeApi.get(`uploads/profesors/${userId}`, { responseType: 'arraybuffer' });
+        const byteArray = new Uint8Array(response.data);
+        const imageDataFromServer = `data:image/png;base64,${btoa(String.fromCharCode.apply(null, byteArray))}`;
         setImagen(imageDataFromServer);
       } catch (error) {
         console.error('Error al obtener datos de usuario:', error);
       }
     };
-  
+
     fetchUserData();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await ezcodeApi.get(`profe/${userId}`);
+        const response = await ezcodeApi.get(`profesor/${userId}`);
         const userDataFromServer = response.data.profesor;
 
         if (userDataFromServer) {
@@ -91,7 +91,7 @@ export const PanelProfesor = () => {
 
     if (Object.keys(errors).length === 0) {
       try {
-        ezcodeApi.put(`profe/${userId}`, formData);
+        ezcodeApi.put(`profesor/${userId}`, formData);
         window.location.reload(false);
         Swal.fire({
           title: "Datos actualizados con exito",
@@ -191,9 +191,9 @@ export const PanelProfesor = () => {
         {/* Columna Izquierda */}
         <Grid item xs={12} sm={4}>
           <Paper style={{ padding: 16, height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Avatar style={{ width: 80, height: 80, marginBottom: 10 }}>
-              <PersonIcon style={{ fontSize: 48 }} />
-            </Avatar>
+            <IconButton style={{ fontSize: 48 }}>
+              <img src={imagen} style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
+            </IconButton>
             <Typography variant="h6" gutterBottom>
               Datos del Usuario
             </Typography>
@@ -202,7 +202,6 @@ export const PanelProfesor = () => {
                 <Typography>Nombre: {userData.nombre}</Typography>
                 <Typography>Apellido: {userData.apellido}</Typography>
                 <Typography>Celular: {userData.celular}</Typography>
-                <Typography>Fecha de Nacimiento: {userData.nacimiento}</Typography>
                 <Typography>Correo: {userData.correo}</Typography>
                 <Typography>Genero: {userData.sexo}</Typography>
               </>
@@ -302,7 +301,7 @@ export const PanelProfesor = () => {
             <Typography variant="h6" gutterBottom>
               Eliminar cuenta
             </Typography>
-            <p>Al elimnar la cuenta ya no se podra acceder a los cursos de la cuenta y seras redirigido a la pagina de inicio</p>
+            <p>Al eliminar la cuenta ya no se podra acceder a los cursos de la cuenta y seras redirigido a la pagina de inicio</p>
             <Button onClick={deleteUser} variant="contained" color="secondary">
               Borrar Usuario
             </Button>

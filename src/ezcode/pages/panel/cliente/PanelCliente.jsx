@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
 import { jwtDecode } from "jwt-decode";
 import ezcodeApi from '../../../../api/ezcodeApi';
 import 'react-phone-input-2/lib/style.css'
@@ -15,6 +15,7 @@ export const PanelCliente = () => {
   const [otp, setOtp] = useState("");
   const [otpVerified, setOtpVerified] = useState(false)
   const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const [imagen, setImagen] = useState('');
 
   const token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
@@ -43,6 +44,21 @@ export const PanelCliente = () => {
     nacimiento: false,
     sexo: false,
   });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await ezcodeApi.get(`uploads/clientes/${userId}`, { responseType: 'arraybuffer' });
+        const byteArray = new Uint8Array(response.data);
+        const imageDataFromServer = `data:image/png;base64,${btoa(String.fromCharCode.apply(null, byteArray))}`;
+        setImagen(imageDataFromServer);
+      } catch (error) {
+        console.error('Error al obtener datos de usuario:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -178,9 +194,9 @@ export const PanelCliente = () => {
         {/* Columna Izquierda */}
         <Grid item xs={12} sm={4}>
           <Paper style={{ padding: 16, height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Avatar style={{ width: 80, height: 80, marginBottom: 10 }}>
-              <PersonIcon style={{ fontSize: 48 }} />
-            </Avatar>
+            <IconButton style={{ fontSize: 48 }}>
+              <img src={imagen} style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
+            </IconButton>
             <Typography variant="h6" gutterBottom>
               Datos del Usuario
             </Typography>
@@ -189,7 +205,6 @@ export const PanelCliente = () => {
                 <Typography>Nombre: {userData.nombre}</Typography>
                 <Typography>Apellido: {userData.apellido}</Typography>
                 <Typography>Celular: {userData.celular}</Typography>
-                <Typography>Fecha de Nacimiento: {userData.nacimiento}</Typography>
                 <Typography>Correo: {userData.correo}</Typography>
                 <Typography>Genero: {userData.sexo}</Typography>
               </>
