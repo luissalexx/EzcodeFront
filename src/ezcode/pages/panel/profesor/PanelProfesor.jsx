@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton, Avatar } from '@mui/material';
 import { jwtDecode } from "jwt-decode";
+import { ProfeNav } from '../../../components/ProfeNav';
 import ezcodeApi from '../../../../api/ezcodeApi';
-import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2';
 import Swal from 'sweetalert2'
-import { ProfeNav } from '../../../components/ProfeNav';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-import { useNavigate } from 'react-router-dom';
+import 'react-phone-input-2/lib/style.css'
 
 export const PanelProfesor = () => {
 
@@ -208,6 +208,7 @@ export const PanelProfesor = () => {
 
       try {
         const response = await ezcodeApi.put(`uploads/profesors/${userId}`, formData);
+        console.log(userId)
         const nuevaImagen = response.data.imagen;
         setImagen(nuevaImagen);
         window.location.reload(false);
