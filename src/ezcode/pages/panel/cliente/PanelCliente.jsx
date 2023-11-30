@@ -8,6 +8,7 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 import Swal from 'sweetalert2'
 import { ClienteNav } from '../../../components/ClienteNav';
+import { useNavigate } from 'react-router-dom';
 
 export const PanelCliente = () => {
 
@@ -15,7 +16,6 @@ export const PanelCliente = () => {
   const [otpVerified, setOtpVerified] = useState(false)
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const [imagen, setImagen] = useState('');
-  const navigate = useNavigate();
 
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
