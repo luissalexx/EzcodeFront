@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Menu, MenuItem, InputBase, IconButton, Toolbar, Box, AppBar, Typography, Stack, Link } from '@mui/material';
+import { Menu, MenuItem, IconButton, Toolbar, Box, AppBar, Typography, Link } from '@mui/material';
 import { useState } from 'react';
 import logo from './logo.png'
 
@@ -88,7 +88,7 @@ export const NavAuth = () => {
                         aria-label="open drawer"
                         sx={{ mr: 2 }}
                     >
-                        <Link color='inherit' to="/">
+                        <Link color='inherit' component={RouterLink} to="/">
                             <img src={logo} alt="example" width="50" height="50" />
                         </Link>
                     </IconButton>
@@ -100,6 +100,13 @@ export const NavAuth = () => {
                     <Link variant='h6' component={RouterLink} color='inherit' to="/" sx={{ flexGrow: 1 }}>
                         Buscar Cursos
                     </Link>
+                    {tipo == "Administrador" ? (
+                        null
+                    ) :
+                        <Link variant='h6' component={RouterLink} color='inherit' to="/contacto" sx={{ flexGrow: 1 }}>
+                            Contacto
+                        </Link>
+                    }
                     <Box >
                         <IconButton
                             edge="end"

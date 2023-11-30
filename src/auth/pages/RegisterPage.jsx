@@ -56,7 +56,6 @@ export const RegisterPage = () => {
         replace: true
       });
     } catch (error) {
-      console.log(error)
       const msg = JSON.stringify(error.response.data.errors)
       Swal.fire({
         title: 'Hubo un error al registrarse',

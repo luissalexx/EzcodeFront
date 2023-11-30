@@ -3,6 +3,7 @@ import { HomePage } from "../pages/HomePage"
 import { PanelCliente } from "../pages/panel/cliente/PanelCliente"
 import { PanelProfesor } from "../pages/panel/profesor/PanelProfesor"
 import { PanelAdmin } from "../pages/panel/administrador/PanelAdmin"
+import { ContactPage } from "../pages/ContactPage"
 
 
 export const EzcodeRoutes = () => {
@@ -14,6 +15,7 @@ export const EzcodeRoutes = () => {
         <Route path="/user/" element={<PanelCliente />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<Navigate to="/" />} />
+        <Route path="/contacto" element={<ContactPage />} />
       </Routes>
     )
   }
@@ -24,6 +26,7 @@ export const EzcodeRoutes = () => {
         <Route path="/profesor/" element={<PanelProfesor />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<Navigate to="/" />} />
+        <Route path="/contacto" element={<ContactPage />} />
       </Routes>
     )
   }

@@ -4,6 +4,7 @@ import { Grid, Link, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { getEnvVariables } from '../../helpers/getEnvVariables';
 import ezcodeApi from '../../api/ezcodeApi';
+import Swal from 'sweetalert2'
 
 
 export const LoginPage = () => {
@@ -11,19 +12,24 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleGoogleLoginSuccess = async (tokenResponse) => {
-
-    const resp = await ezcodeApi.post('auth/google', { id_token: tokenResponse.credential })
-      .then(resp => {
-        const { data } = resp;
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("tipo", data.tipo);
-        navigate('/',{
-          replace: true
-        });
-        window.location.reload(false);
-      })
-      .catch(console.warn);
-  }
+    try {
+      const resp = await ezcodeApi.post('auth/google', { id_token: tokenResponse.credential });
+      const { data } = resp;
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("tipo", data.tipo);
+      navigate('/', {
+        replace: true
+      });
+    } catch (error) {
+      const msg = JSON.stringify(error.response.data.msg)
+      Swal.fire({
+        title: 'Hubo un error al iniciar sesion',
+        text: msg,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      });
+    }
+  };
 
   return (
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Grid, TextField, Button, Paper, Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton, Avatar } from '@mui/material';
 import { jwtDecode } from "jwt-decode";
 import ezcodeApi from '../../../../api/ezcodeApi';
 import 'react-phone-input-2/lib/style.css'
 import PhoneInput from 'react-phone-input-2';
-import Avatar from '@mui/material/Avatar';
-import PersonIcon from '@mui/icons-material/Person';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 import Swal from 'sweetalert2'
 import { ClienteNav } from '../../../components/ClienteNav';
@@ -17,6 +17,7 @@ export const PanelCliente = () => {
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const [imagen, setImagen] = useState('');
 
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.uid;
@@ -68,6 +69,14 @@ export const PanelCliente = () => {
 
         if (userDataFromServer) {
           setUserData(userDataFromServer);
+          // Actualizar el estado formData con los datos originales
+          setFormData({
+            nombre: userDataFromServer.nombre || '',
+            apellido: userDataFromServer.apellido || '',
+            celular: userDataFromServer.celular || '',
+            sexo: userDataFromServer.sexo || '',
+          });
+          setOtpVerified(true);
         } else {
           console.error('No se encontraron datos de usuario en la respuesta del servidor');
         }
@@ -112,6 +121,9 @@ export const PanelCliente = () => {
       const { name, value } = e.target;
       setFormData((prevData) => ({ ...prevData, [name]: value }));
       setFormErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
+      if (formData.celular != userData.celular) {
+        setOtpVerified(false);
+      }
     } else {
       // Maneja el evento de PhoneInput sin e.target
       setFormData((prevData) => ({ ...prevData, celular: e }));
@@ -187,6 +199,25 @@ export const PanelCliente = () => {
     }
   };
 
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+
+    // Verifica si se seleccionó un archivo
+    if (file) {
+      const formData = new FormData();
+      formData.append('archivo', file);
+
+      try {
+        const response = await ezcodeApi.put(`uploads/clientes/${userId}`, formData);
+        const nuevaImagen = response.data.imagen;
+        setImagen(nuevaImagen);
+        window.location.reload(false);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <div>
       <ClienteNav />
@@ -194,9 +225,13 @@ export const PanelCliente = () => {
         {/* Columna Izquierda */}
         <Grid item xs={12} sm={4}>
           <Paper style={{ padding: 16, height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <IconButton style={{ fontSize: 48 }}>
-              <img src={imagen} style={{ width: '80px', height: '80px', borderRadius: '50%' }} />
-            </IconButton>
+            <Avatar src={imagen} sx={{ width: 100, height: 100 }} />
+            <input accept="image/*" style={{ display: 'none' }} id="icon-button-file" type="file" onChange={handleImageChange} />
+            <label htmlFor="icon-button-file">
+              <IconButton color="primary" aria-label="upload picture" component="span">
+                <PhotoCameraIcon />
+              </IconButton>
+            </label>
             <Typography variant="h6" gutterBottom>
               Datos del Usuario
             </Typography>
@@ -241,7 +276,6 @@ export const PanelCliente = () => {
               <div>
                 <label htmlFor="celular">Celular</label>
                 <PhoneInput
-                  disabled={otpVerified == true}
                   country={'mx'}
                   placeholder='Celular'
                   fullWidth
@@ -254,6 +288,7 @@ export const PanelCliente = () => {
                 />
                 {formData.celular.length === 12 ? (
                   <Grid item xs={12} sx={{ mt: 2 }}>
+                    <p>Si se cambia o se borra algún número del celular es necesario volver a verificarlo, si no fue intencional refresque la pagina</p>
                     <TextField
                       disabled={otpVerified == true}
                       label="Codigo de verificacion"
@@ -295,7 +330,7 @@ export const PanelCliente = () => {
                   </RadioGroup>
                 </FormControl>
               </Grid>
-              <Button type="submit" variant="contained" color="secondary" disabled={otpVerified == false}>
+              <Button type="submit" variant="contained" color="secondary" disabled={otpVerified == false || formData.celular.length !== 12}>
                 Actualizar
               </Button>
             </form>
@@ -304,7 +339,7 @@ export const PanelCliente = () => {
             <Typography variant="h6" gutterBottom>
               Eliminar cuenta
             </Typography>
-            <p>Al elimnar la cuenta ya no se podra acceder a los cursos de la cuenta y seras redirigido a la pagina de inicio</p>
+            <p>Al eliminar la cuenta ya no se podra acceder a los cursos de la cuenta y seras redirigido a la pagina de inicio</p>
             <Button onClick={deleteUser} variant="contained" color="secondary">
               Borrar Usuario
             </Button>

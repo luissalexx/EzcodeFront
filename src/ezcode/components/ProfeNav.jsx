@@ -25,10 +25,10 @@ export const ProfeNav = () => {
                     </Typography>
 
                     <Stack direction='row' spacing={2} sx={{ flexGrow: 1 }}>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/profe/" >
+                        <Link variant='h6' component={RouterLink} color='inherit' to="/profesor/" >
                             Perfil
                         </Link>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/profe/solicitudes">
+                        <Link variant='h6' component={RouterLink} color='inherit' to="/profesor/solicitudes">
                             Solicitudes
                         </Link>
                     </Stack>
