@@ -32,7 +32,7 @@ export const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const anunciosResponse = await ezcodeApi.get('anuncio/');
+        const anunciosResponse = await ezcodeApi.get('anuncio/published/');
         setAnuncios(anunciosResponse.data.results);
         console.log(anunciosResponse)
 
