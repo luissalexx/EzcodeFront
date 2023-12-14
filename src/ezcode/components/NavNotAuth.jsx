@@ -1,12 +1,13 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Toolbar, Box, AppBar, Link, Typography, Stack, IconButton } from '@mui/material';
+import { Toolbar, Box, AppBar, Link, Typography, IconButton } from '@mui/material';
 import logo from './logo.png'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 
 export const NavNotAuth = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
                 <Toolbar>
                     <IconButton
                         edge="start"
@@ -19,18 +20,22 @@ export const NavNotAuth = () => {
                         </Link>
                     </IconButton>
 
-                    <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                    <Typography variant='h6' component={RouterLink} color='inherit' to="/" sx={{ flexGrow: 1, textDecoration: 'none' }}>
                         EZECODE
                     </Typography>
 
-                    <Stack direction='row' spacing={2}>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/auth/login">
-                            Inicia Sesión
-                        </Link>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/">
-                            Buscar Cursos
-                        </Link>
-                    </Stack>
+                    <Typography variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', padding: '10px' }}>
+                        Buscar Cursos
+                    </Typography>
+
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', flexGrow: 1 }}>
+                        <SearchOutlinedIcon sx={{ marginTop: '5px', fontSize: '2rem' }} />
+                    </Link>
+
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/auth/login" sx={{ textDecoration: 'none', flexGrow: 1 }}>
+                        Inicia Sesión
+                    </Link>
+
                 </Toolbar>
             </AppBar>
         </Box>

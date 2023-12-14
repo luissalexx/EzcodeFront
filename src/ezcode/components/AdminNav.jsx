@@ -4,12 +4,12 @@ import logo from './logo.png'
 
 
 export const AdminNav = () => {
-    
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                <IconButton
+                    <IconButton
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
@@ -23,16 +23,15 @@ export const AdminNav = () => {
                     <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                         EZECODE
                     </Typography>
-                    
-                    <Stack direction='row' spacing={2} sx={{ flexGrow: 1 }}>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/admin/" >
-                            Perfil
-                        </Link>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/admin/solicitudes">
-                            Solicitudes
-                        </Link>
-                    </Stack>
-                    
+
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/admin/" sx={{ flexGrow: 1, textDecoration: 'none' }} >
+                        Perfil
+                    </Link>
+
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/admin/solicitudes" sx={{ flexGrow: 1, textDecoration: 'none' }}>
+                        Solicitudes
+                    </Link>
+
                 </Toolbar>
             </AppBar>
         </Box>

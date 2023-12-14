@@ -23,14 +23,14 @@ export const ClienteNav = () => {
                         EZECODE
                     </Typography>
 
-                    <Stack direction='row' spacing={2} sx={{ flexGrow: 1 }}>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/user/" >
-                            Perfil
-                        </Link>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/user/cursos">
-                            Mis Cursos
-                        </Link>
-                    </Stack>
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/user/" sx={{ flexGrow: 1, textDecoration: 'none' }}>
+                        Perfil
+                    </Link>
+
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/user/cursos" sx={{ flexGrow: 1, textDecoration: 'none' }}>
+                        Mis Cursos
+                    </Link>
+
                 </Toolbar>
             </AppBar>
         </Box>

@@ -104,10 +104,14 @@ export const PanelCliente = () => {
     if (Object.keys(errors).length === 0) {
       try {
         ezcodeApi.put(`user/${userId}`, formData);
-        window.location.reload(false);
         Swal.fire({
-          title: "Datos actualizados con exito",
-          icon: "success"
+          title: 'Datos actualizados con éxito',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload(false);
+          }
         });
       } catch (error) {
         console.error('Error updating user data:', error);
@@ -288,7 +292,7 @@ export const PanelCliente = () => {
                 />
                 {formData.celular.length === 12 ? (
                   <Grid item xs={12} sx={{ mt: 2 }}>
-                    <p>Si se cambia o se borra algún número del celular es necesario volver a verificarlo, si no fue intencional refresque la pagina</p>
+                    <p>Si se cambia o se borra algún número del celular es necesario volver a verificarlo</p>
                     <TextField
                       disabled={otpVerified == true}
                       label="Codigo de verificacion"
@@ -323,7 +327,6 @@ export const PanelCliente = () => {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="sexo"
-                    defaultValue="Mujer"
                   >
                     <FormControlLabel value="Mujer" control={<Radio />} label="Mujer" onChange={handleChange} />
                     <FormControlLabel value="Hombre" control={<Radio />} label="Hombre" onChange={handleChange} />

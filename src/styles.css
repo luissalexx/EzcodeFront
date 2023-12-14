@@ -1,40 +1,44 @@
-/* Modal */
-.ReactModalPortal > div{
-    opacity: 0;
+
+
+@font-face {
+    font-family: 'helveticaNeue';
+    src: url(../public/HELVETICANEUEBOLD.TTF);
 }
 
-.ReactModalPortal .ReactModal__Overlay {
-    align-items: center;
+.helveticaNeue {
+    font-family: 'helveticaNeue';
+}
+
+@font-face {
+    font-family: 'arialNova';
+    src: url(../public/ARIALNOVA-LIGHT.TTF);
+}
+
+.arialNova {
+    font-family: 'arialNova';
+}
+
+.swal2-image {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.back {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url(https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/f7731566332741.5b13e3a3239f4.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.backHome {
+    background-image: url('ezcode/components/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
-    transition: opacity .2s ease-in-out;
-    z-index: 999;
-}
-
-.modal-fondo {
-    background-color: rgba(0, 0, 0, 0.3);
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    position: fixed;
-}
-
-.ReactModalPortal .ReactModal__Overlay--after-open {
-    opacity: 1;
-}
-
-.ReactModalPortal .ReactModal__Overlay--before-close {
-    opacity: 0;
-}
-
-.modal {
-    background: white;
-    border-radius: 5px;
-    color: rgb(51, 51, 51);
-    display: inline;
-    max-height: 620px;
-    max-width: 500px;
-    outline: none;
-    padding: 10px;
+    flex-direction: column;
+    color: white;
 }

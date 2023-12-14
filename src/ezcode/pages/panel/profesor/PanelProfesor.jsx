@@ -46,7 +46,7 @@ export const PanelProfesor = () => {
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchImageData = async () => {
       try {
         const response = await ezcodeApi.get(`uploads/profesors/${userId}`, { responseType: 'arraybuffer' });
         const byteArray = new Uint8Array(response.data);
@@ -57,7 +57,7 @@ export const PanelProfesor = () => {
       }
     };
 
-    fetchUserData();
+    fetchImageData();
   }, []);
 
   useEffect(() => {
@@ -103,10 +103,14 @@ export const PanelProfesor = () => {
     if (Object.keys(errors).length === 0) {
       try {
         ezcodeApi.put(`profesor/${userId}`, formData);
-        window.location.reload(false);
         Swal.fire({
-          title: "Datos actualizados con exito",
-          icon: "success"
+          title: 'Datos actualizados con éxito',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload(false);
+          }
         });
       } catch (error) {
         console.error('Error updating user data:', error);
@@ -115,7 +119,7 @@ export const PanelProfesor = () => {
   };
 
   const handleChange = (e) => {
-    // Verifica si el evento proviene de PhoneInput
+    // Verifica si el evento proviene de PhoneInput 
     if (e.target) {
       const { name, value } = e.target;
       setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -181,7 +185,10 @@ export const PanelProfesor = () => {
       });
 
       if (result.isConfirmed) {
+        await ezcodeApi.delete(`anuncio/all/${userId}`);
+        await ezcodeApi.delete(`solicitudA/all/${userId}`);
         const response = await ezcodeApi.delete(`profesor/${userId}`);
+
         if (response.status === 200) {
           Swal.fire('Borrado', 'El usuario ha sido borrado correctamente', 'success');
           localStorage.clear();
@@ -252,7 +259,6 @@ export const PanelProfesor = () => {
             <Typography variant="h6" gutterBottom>
               Actualizar Datos
             </Typography>
-            <p>Se requiere volver a verificar el celular si quieres actualizar los datos</p>
             <form onSubmit={handleFormSubmit}>
               <TextField
                 label="Nombres"
@@ -324,7 +330,6 @@ export const PanelProfesor = () => {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="sexo"
-                    defaultValue="Mujer"
                   >
                     <FormControlLabel value="Mujer" control={<Radio />} label="Mujer" onChange={handleChange} />
                     <FormControlLabel value="Hombre" control={<Radio />} label="Hombre" onChange={handleChange} />

@@ -104,8 +104,13 @@ export const PanelAdmin = () => {
         ezcodeApi.put(`admin/${userId}`, formData);
         window.location.reload(false);
         Swal.fire({
-          title: "Datos actualizados con exito",
-          icon: "success"
+          title: 'Datos actualizados con éxito',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload(false);
+          }
         });
       } catch (error) {
         console.error('Error updating user data:', error);
@@ -290,7 +295,6 @@ export const PanelAdmin = () => {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="sexo"
-                    defaultValue="Mujer"
                   >
                     <FormControlLabel value="Mujer" control={<Radio />} label="Mujer" onChange={handleChange} />
                     <FormControlLabel value="Hombre" control={<Radio />} label="Hombre" onChange={handleChange} />

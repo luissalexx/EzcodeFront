@@ -254,12 +254,14 @@ export const RegisterPage = () => {
                   onChange={e => setOtp(e.target.value)}
                 />
                 <Button
+                  disabled={otpVerified == true}
                   className="success"
                   onClick={verifyCode}
                 >
                   Verificar Codigo
                 </Button>
                 <Button
+                  disabled={otpVerified == true}
                   className="success"
                   onClick={sendCode}
                 >

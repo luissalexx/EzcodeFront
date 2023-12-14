@@ -24,14 +24,13 @@ export const ProfeNav = () => {
                         EZECODE
                     </Typography>
 
-                    <Stack direction='row' spacing={2} sx={{ flexGrow: 1 }}>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/profesor/" >
-                            Perfil
-                        </Link>
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/profesor/solicitudes">
-                            Solicitudes
-                        </Link>
-                    </Stack>
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/profesor/" sx={{ flexGrow: 1, textDecoration: 'none' }}>
+                        Perfil
+                    </Link>
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/profesor/anuncios" sx={{ flexGrow: 1, textDecoration: 'none' }}>
+                        Anuncios
+                    </Link>
+
                 </Toolbar>
             </AppBar>
         </Box>

@@ -1,5 +1,6 @@
 import { createTheme } from "@mui/material";
 import { red } from "@mui/material/colors";
+import '../styles.css'
 
 export const greyTheme = createTheme({
     palette: {
@@ -11,6 +12,9 @@ export const greyTheme = createTheme({
         },
         error: {
             main: red.A400
-        }
-    }
-})
+        },
+    },
+    typography: {
+        fontFamily: 'arialNova',
+    },
+});

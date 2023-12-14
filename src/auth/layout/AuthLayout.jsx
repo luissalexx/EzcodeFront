@@ -1,5 +1,4 @@
 import { Grid, Typography } from "@mui/material"
-import './styles.css'
 import { ChangeNav } from "../../ezcode/components/ChangeNav"
 
 export const AuthLayout = ({ children, title = '' }) => {

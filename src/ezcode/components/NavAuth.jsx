@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Menu, MenuItem, IconButton, Toolbar, Box, AppBar, Typography, Link } from '@mui/material';
 import { useState } from 'react';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import logo from './logo.png'
 
 
@@ -80,7 +81,7 @@ export const NavAuth = () => {
     );
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
                 <Toolbar>
                     <IconButton
                         edge="start"
@@ -97,15 +98,22 @@ export const NavAuth = () => {
                         EZECODE
                     </Typography>
 
-                    <Link variant='h6' component={RouterLink} color='inherit' to="/" sx={{ flexGrow: 1 }}>
+                    <Typography variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', padding: '10px' }}>
                         Buscar Cursos
+                    </Typography>
+
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', flexGrow: 1 }}>
+                        <SearchOutlinedIcon sx={{ marginTop: '5px', fontSize: '2rem' }} />
                     </Link>
+
                     {tipo == "Administrador" ? (
                         null
                     ) :
-                        <Link variant='h6' component={RouterLink} color='inherit' to="/contacto" sx={{ flexGrow: 1 }}>
-                            Contacto
-                        </Link>
+                        <Typography sx={{ flexGrow: 1 }}>
+                            <Link variant='h6' component={RouterLink} color='inherit' to="/contacto" sx={{ textDecoration: 'none' }}>
+                                Contacto
+                            </Link>
+                        </Typography>
                     }
                     <Box >
                         <IconButton
@@ -122,6 +130,6 @@ export const NavAuth = () => {
                 </Toolbar>
             </AppBar>
             {renderMenu}
-        </Box>
+        </Box >
     )
 }
