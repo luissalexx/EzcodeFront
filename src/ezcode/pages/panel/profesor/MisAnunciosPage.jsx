@@ -52,7 +52,7 @@ export const MisAnunciosPage = () => {
               urls[anuncio.uid] = url;
               const solicitud = await ezcodeApi.get(`solicitudA/${anuncio.uid}`);
               setSolicitud(solicitud);
-              
+
             }
             setImageUrls(urls);
           } catch (error) {
@@ -83,7 +83,7 @@ export const MisAnunciosPage = () => {
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'Continuar',
         });
-        if(result.isConfirmed){
+        if (result.isConfirmed) {
           window.location.reload(false);
         }
       } catch (error) {
@@ -162,6 +162,7 @@ export const MisAnunciosPage = () => {
                       secondaryAction={
                         <Grid>
                           <IconButton
+                            disabled={(solicitud && solicitud.data != null)}
                             edge="end"
                             aria-label="update"
                             style={{ marginRight: "8px" }}

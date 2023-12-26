@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ProfeNav } from '../../../../components/ProfeNav'
 import { useEffect, useState } from 'react';
 import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Paper, Radio, RadioGroup, TextField, TextareaAutosize, Typography } from '@mui/material';
@@ -10,6 +10,7 @@ export const AnuncioEdit = () => {
   const { id } = useParams();
   const [imagen, setImagen] = useState('');
   const [imagenProfe, setImagenProfe] = useState('');
+  const navigate = useNavigate();
 
   const [anuncioData, setAnuncioData] = useState({
     nombre: '',
@@ -120,16 +121,19 @@ export const AnuncioEdit = () => {
 
     if (Object.keys(errors).length === 0) {
       try {
-        await ezcodeApi.put(`anuncio/details/${id}`, formData);
+        const response = await ezcodeApi.put(`anuncio/details/${id}`, formData);
+        console.log(response.data);
         await ezcodeApi.post('solicitudA/', { anuncio: id });
         Swal.fire({
           title: 'Datos actualizados con éxito',
           text: 'Se envió una solicitud al administrador para su revision',
           icon: 'success',
           confirmButtonText: 'Ok',
-        }).then((result) => {
+        }).then((result) => { 
           if (result.isConfirmed) {
-            window.location.reload(false);
+            navigate('/profesor/anuncios', {
+              replace: true
+            });
           }
         });
       } catch (error) {

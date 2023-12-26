@@ -9,6 +9,11 @@ import { AnuncioCreate } from "../pages/panel/profesor/anuncio/AnuncioCreate"
 import { AnuncioEdit } from "../pages/panel/profesor/anuncio/AnuncioEdit"
 import { SolicitudesPage } from "../pages/panel/administrador/SolicitudesPage"
 import { BusquedaPage } from "../pages/BusquedaPage"
+import { CarritoPage } from "../pages/CarritoPage"
+import { SolicitudesProfePage } from "../pages/panel/profesor/SolicitudesProfePage"
+import { MisCursosPage } from "../pages/panel/cliente/MisCursosPage"
+import { CursoPage } from "../pages/curso/CursoPage"
+import { CursosProfe } from "../pages/panel/profesor/CursosProfe"
 
 
 export const EzcodeRoutes = () => {
@@ -20,8 +25,11 @@ export const EzcodeRoutes = () => {
         <Route path="/user/" element={<PanelCliente />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<Navigate to="/" />} />
+        <Route path="/cliente/Cursos" element={<MisCursosPage />} />
+        <Route path="/cliente/cursoView/:id" element={<CursoPage />} />
         <Route path="/contacto" element={<ContactPage />} />
         <Route path="/buscar" element={<BusquedaPage />} />
+        <Route path="/carrito" element={<CarritoPage />} />
       </Routes>
     )
   }
@@ -33,7 +41,10 @@ export const EzcodeRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/contacto" element={<ContactPage />} />
         <Route path="/profesor/anuncios" element={<MisAnunciosPage />} />
+        <Route path="/profesor/solicitudes" element={<SolicitudesProfePage />} />
         <Route path="/profesor/anuncioEdit/:id" element={<AnuncioEdit />} />
+        <Route path="/profesor/Cursos" element={<CursosProfe />} />
+        <Route path="/profesor/cursoView/:id" element={<CursoPage />} />
         <Route path="/profesor/anuncio/crear" element={<AnuncioCreate />} />
         <Route path="/buscar" element={<BusquedaPage />} />
         <Route path="/*" element={<Navigate to="/" />} />

@@ -20,21 +20,25 @@ export const NavNotAuth = () => {
                         </Link>
                     </IconButton>
 
-                    <Typography variant='h6' component={RouterLink} color='inherit' to="/" sx={{ flexGrow: 1, textDecoration: 'none' }}>
+                    <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                         EZECODE
                     </Typography>
 
-                    <Typography variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', padding: '10px' }}>
-                        Buscar Cursos
-                    </Typography>
-
-                    <Link variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', flexGrow: 1 }}>
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none' }}>
                         <SearchOutlinedIcon sx={{ marginTop: '5px', fontSize: '2rem' }} />
                     </Link>
 
-                    <Link variant='h6' component={RouterLink} color='inherit' to="/auth/login" sx={{ textDecoration: 'none', flexGrow: 1 }}>
-                        Inicia Sesión
-                    </Link>
+                    <Typography color='white' sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} to="/buscar" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            Buscar cursos
+                        </Link>
+                    </Typography>
+
+                    <Typography sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} color='inherit' to="/auth/login" sx={{ textDecoration: 'none' }}>
+                            Inicia Sesión
+                        </Link>
+                    </Typography>
 
                 </Toolbar>
             </AppBar>

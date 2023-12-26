@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 export const BusquedaPage = () => {
 
     const token = localStorage.getItem('token');
+    const tipo = localStorage.getItem('tipo');
     const [categoria, setCategoria] = useState();
     const [termino, setTermino] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -88,6 +89,7 @@ export const BusquedaPage = () => {
     const viewAnuncio = async (idAnuncio) => {
         try {
             const response = await ezcodeApi.get(`anuncio/${idAnuncio}`);
+            const solicitudes = await ezcodeApi.get(`solicitudC/${idAnuncio}`)
             const anuncio = response.data.anuncio;
             const imagen = await obtenerUrlImagenAnuncio(idAnuncio);
 
@@ -120,6 +122,32 @@ export const BusquedaPage = () => {
                     navigate('/auth/login', {
                         replace: true
                     });
+                } else {
+                    if (tipo === "Alumno" && solicitudes.data == null) {
+                        await ezcodeApi.post('solicitudC/', { anuncio: idAnuncio });
+                        Swal.fire({
+                            title: 'Solicitud enviada',
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Ok',
+                        });
+                    } else {
+                        if (tipo !== "Alumno") {
+                            Swal.fire({
+                                title: 'No tienes los permisos para enviar una solicitud',
+                                icon: 'error',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Ok',
+                            });
+                        } else { 
+                            Swal.fire({
+                                title: 'Ya enviaste una solicitud previamente',
+                                icon: 'error',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Ok',
+                            });
+                        }
+                    }
                 }
             }
         } catch (error) {

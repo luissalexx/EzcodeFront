@@ -4,6 +4,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Menu, MenuItem, IconButton, Toolbar, Box, AppBar, Typography, Link } from '@mui/material';
 import { useState } from 'react';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from './logo.png'
 
 
@@ -98,13 +99,16 @@ export const NavAuth = () => {
                         EZECODE
                     </Typography>
 
-                    <Typography variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', padding: '10px' }}>
-                        Buscar Cursos
-                    </Typography>
 
-                    <Link variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none', flexGrow: 1 }}>
+                    <Link variant='h6' component={RouterLink} color='inherit' to="/buscar" sx={{ textDecoration: 'none' }}>
                         <SearchOutlinedIcon sx={{ marginTop: '5px', fontSize: '2rem' }} />
                     </Link>
+
+                    <Typography color='white' sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} to="/buscar" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            Buscar cursos
+                        </Link>
+                    </Typography>
 
                     {tipo == "Administrador" ? (
                         null
@@ -115,6 +119,18 @@ export const NavAuth = () => {
                             </Link>
                         </Typography>
                     }
+
+                    {tipo != "Alumno" ? (
+                        null
+                    ) :
+                        <Typography sx={{ flexGrow: 1 }}>
+                            <Link variant='h6' component={RouterLink} color='inherit' to="/carrito" sx={{ textDecoration: 'none' }}>
+                                <ShoppingCartIcon />
+                                Carrito
+                            </Link>
+                        </Typography>
+                    }
+
                     <Box >
                         <IconButton
                             edge="end"

@@ -49,7 +49,6 @@ export const PanelAdmin = () => {
         const response = await ezcodeApi.get(`uploads/administradors/${userId}`, { responseType: 'arraybuffer' });
         const byteArray = new Uint8Array(response.data);
         const imageDataFromServer = `data:image/png;base64,${btoa(String.fromCharCode.apply(null, byteArray))}`;
-        console.log(imageDataFromServer);
         setImagen(imageDataFromServer);
       } catch (error) {
         console.error('Error al obtener datos de usuario:', error);

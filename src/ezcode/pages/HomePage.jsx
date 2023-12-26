@@ -2,17 +2,18 @@ import { Avatar, Button, Typography } from "@mui/material"
 import { ChangeNav } from "../components/ChangeNav"
 import { Link } from 'react-scroll';
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactDOMServer from 'react-dom/server';
 import Slider from 'react-slick';
 import ezcodeApi from "../../api/ezcodeApi";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
 
   const token = localStorage.getItem('token');
+  const tipo = localStorage.getItem('tipo');
   const [anuncios, setAnuncios] = useState([]);
   const [imageUrls, setImageUrls] = useState({});
   const navigate = useNavigate();
@@ -34,7 +35,6 @@ export const HomePage = () => {
       try {
         const anunciosResponse = await ezcodeApi.get('anuncio/published/');
         setAnuncios(anunciosResponse.data.results);
-        console.log(anunciosResponse)
 
         const urls = {};
         for (const anuncio of anunciosResponse.data.results) {
@@ -53,6 +53,7 @@ export const HomePage = () => {
 
   const settings = {
     dots: true,
+    infinite: true,
     speed: 500,
     slidesToShow: Math.min(5, anuncios.length),
     slidesToScroll: 1,
@@ -61,6 +62,7 @@ export const HomePage = () => {
   const viewAnuncio = async (idAnuncio) => {
     try {
       const response = await ezcodeApi.get(`anuncio/${idAnuncio}`);
+      const solicitudes = await ezcodeApi.get(`solicitudC/${idAnuncio}`)
       const anuncio = response.data.anuncio;
       const imagen = await obtenerUrlImagenAnuncio(idAnuncio);
 
@@ -93,6 +95,33 @@ export const HomePage = () => {
           navigate('/auth/login', {
             replace: true
           });
+        } else {
+          if (tipo === "Alumno" && solicitudes.data == null) {
+            await ezcodeApi.post('solicitudC/', { anuncio: idAnuncio, profesor: anuncio.profesor });
+            Swal.fire({
+              title: 'Solicitud enviada',
+              text: 'Ten en cuenta que puede tardar en ser aceptada por el cupo limitado de cursos que tiene el profesor, puedes ver la solicitud en tu carrito',
+              icon: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Ok',
+            });
+          } else {
+            if (tipo !== "Alumno") {
+              Swal.fire({
+                title: 'No tienes los permisos para enviar una solicitud',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok',
+              });
+            } else {
+              Swal.fire({
+                title: 'Ya enviaste una solicitud previamente',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok',
+              });
+            }
+          }
         }
       }
     } catch (error) {
