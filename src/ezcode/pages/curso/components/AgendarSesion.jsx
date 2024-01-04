@@ -117,7 +117,7 @@ export const AgendarSesion = ({ id }) => {
 
             <Button variant="contained" color="primary" onClick={handleCreateEvent}
                 disabled={
-                    tipo === "Profesor" || isButtonDisabled || !selectedDate || !selectedTime
+                    tipo === "Profesor" || !selectedDate || !selectedTime
                 }>
                 Agendar Sesión
             </Button>
