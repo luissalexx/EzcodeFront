@@ -41,7 +41,7 @@ export const AnuncioCreate = () => {
                 const anuncioDataFromServer = response.data;
                 if (anuncioDataFromServer) {
                     try {
-                        await ezcodeApi.post('solicitudA/', {anuncio: anuncioDataFromServer.uid});
+                        await ezcodeApi.post('solicitudA/', { anuncio: anuncioDataFromServer.uid });
                     } catch (error) {
                         console.log(error)
                     }

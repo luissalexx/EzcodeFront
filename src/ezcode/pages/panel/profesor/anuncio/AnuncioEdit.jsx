@@ -122,7 +122,6 @@ export const AnuncioEdit = () => {
     if (Object.keys(errors).length === 0) {
       try {
         const response = await ezcodeApi.put(`anuncio/details/${id}`, formData);
-        console.log(response.data);
         await ezcodeApi.post('solicitudA/', { anuncio: id });
         Swal.fire({
           title: 'Datos actualizados con éxito',

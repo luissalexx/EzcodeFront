@@ -64,8 +64,10 @@ export const MisCursosPage = () => {
     }, []);
 
     const salirCurso = async (idCurso) => {
+        const cursoResponse = await ezcodeApi.get(`curso/${idCurso}`);
+        const curso = cursoResponse.data.curso;
         try {
-            const result = await Swal.fire({
+            const confirmationResult = await Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'Estás a punto de borrar este curso. Esta acción no se puede deshacer.',
                 icon: 'warning',
@@ -76,11 +78,39 @@ export const MisCursosPage = () => {
                 cancelButtonText: 'Cancelar',
             });
 
-            if (result.isConfirmed) {
+            if (confirmationResult.isConfirmed) {
+
+                const downloadResult = await Swal.fire({
+                    title: 'Quieres descargar la carpeta de drive?',
+                    text: 'Seras enviado un link de drive para descargar la carpeta',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Continuar',
+                    cancelButtonText: 'Cancelar',
+                });
+
+                if (downloadResult.isConfirmed) {
+                    const linkResponse = await ezcodeApi.get(`drive/link/${curso.carpeta}`);
+                    const driveFolderLink = linkResponse.data.link;
+                    window.open(driveFolderLink, '_blank');
+                }
+
+
                 await ezcodeApi.delete(`curso/${idCurso}`);
-                window.location.reload(false);
+
+                const successResult = await Swal.fire({
+                    title: 'Curso eliminado de la cuenta',
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                });
+
+                if (successResult.isConfirmed) {
+                    window.location.reload(false);
+                }
             }
         } catch (error) {
+            console.log(error);
             Swal.fire('Error', 'Hubo un error al borrar el curso', 'error');
         }
     };

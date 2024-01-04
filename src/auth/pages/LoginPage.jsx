@@ -14,6 +14,7 @@ export const LoginPage = () => {
   const handleGoogleLoginSuccess = async (tokenResponse) => {
     try {
       const resp = await ezcodeApi.post('auth/google', { id_token: tokenResponse.credential });
+      console.log(resp);
       const { data } = resp;
       localStorage.setItem("token", data.token);
       localStorage.setItem("tipo", data.tipo);

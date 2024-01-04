@@ -14,6 +14,8 @@ import { SolicitudesProfePage } from "../pages/panel/profesor/SolicitudesProfePa
 import { MisCursosPage } from "../pages/panel/cliente/MisCursosPage"
 import { CursoPage } from "../pages/curso/CursoPage"
 import { CursosProfe } from "../pages/panel/profesor/CursosProfe"
+import { TemaCreate } from "../pages/curso/components/TemaCreate"
+import { TemaEdit } from "../pages/curso/components/TemaEdit"
 
 
 export const EzcodeRoutes = () => {
@@ -44,6 +46,8 @@ export const EzcodeRoutes = () => {
         <Route path="/profesor/solicitudes" element={<SolicitudesProfePage />} />
         <Route path="/profesor/anuncioEdit/:id" element={<AnuncioEdit />} />
         <Route path="/profesor/Cursos" element={<CursosProfe />} />
+        <Route path="/profesor/curso/tema/crear/:id" element={<TemaCreate />} />
+        <Route path="/profesor/curso/tema/editar/:id/:idTema" element={<TemaEdit />} />
         <Route path="/profesor/cursoView/:id" element={<CursoPage />} />
         <Route path="/profesor/anuncio/crear" element={<AnuncioCreate />} />
         <Route path="/buscar" element={<BusquedaPage />} />
