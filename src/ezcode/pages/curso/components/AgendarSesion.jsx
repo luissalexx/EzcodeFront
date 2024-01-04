@@ -57,7 +57,7 @@ export const AgendarSesion = ({ id }) => {
 
             setTimeout(() => {
                 setIsButtonDisabled(false);
-            }, 24 * 60 * 60 * 1000);
+            }, 10 * 60 * 1000);
 
             const url = response.data.url;
 
