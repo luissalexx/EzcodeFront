@@ -265,6 +265,7 @@ export const PanelProfesor = () => {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
+                autoComplete='off'
                 fullWidth
                 margin="normal"
                 error={formErrors.nombre}
@@ -276,6 +277,7 @@ export const PanelProfesor = () => {
                 value={formData.apellido}
                 onChange={handleChange}
                 fullWidth
+                autoComplete='off'
                 margin="normal"
                 error={formErrors.apellido}
                 helperText={formErrors.apellido && 'Apellido es obligatorio'}
@@ -285,6 +287,7 @@ export const PanelProfesor = () => {
                 <PhoneInput
                   country={'mx'}
                   placeholder='Celular'
+                  autoComplete='off'
                   fullWidth
                   value={formData.celular}
                   onChange={(value) => handleChange({ target: { name: 'celular', value } })}
@@ -300,6 +303,7 @@ export const PanelProfesor = () => {
                       disabled={otpVerified == true}
                       label="Codigo de verificacion"
                       type="text"
+                      autoComplete='off'
                       placeholder='Ingrese el codigo'
                       fullWidth
                       name="codigo"

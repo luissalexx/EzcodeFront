@@ -89,6 +89,7 @@ export const AnuncioCreate = () => {
                                 label="Nombre"
                                 name="nombre"
                                 value={formData.nombre}
+                                autoComplete='off'
                                 fullWidth
                                 margin="normal"
                                 onChange={handleChange}
@@ -121,6 +122,7 @@ export const AnuncioCreate = () => {
                                     name="descripcion"
                                     id="descripcion"
                                     color="neutral"
+                                    autoComplete='off'
                                     value={formData.descripcion}
                                     minRows={10}
                                     maxRows={10}
@@ -133,6 +135,7 @@ export const AnuncioCreate = () => {
                                 name="precio"
                                 type='number'
                                 value={formData.precio}
+                                autoComplete='off'
                                 fullWidth
                                 margin="normal"
                                 onChange={handleChange}

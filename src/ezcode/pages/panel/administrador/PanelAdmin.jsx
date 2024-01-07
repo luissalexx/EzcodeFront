@@ -227,6 +227,7 @@ export const PanelAdmin = () => {
               <TextField
                 label="Nombres"
                 name="nombre"
+                autoComplete='off'
                 value={formData.nombre}
                 onChange={handleChange}
                 fullWidth
@@ -241,6 +242,7 @@ export const PanelAdmin = () => {
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
+                autoComplete='off'
                 error={formErrors.apellido}
                 helperText={formErrors.apellido && 'Apellido es obligatorio'}
               />
@@ -250,6 +252,7 @@ export const PanelAdmin = () => {
                   country={'mx'}
                   placeholder='Celular'
                   fullWidth
+                  autoComplete='off'
                   value={formData.celular}
                   onChange={(value) => handleChange({ target: { name: 'celular', value } })}
                   margin="normal"
@@ -266,6 +269,7 @@ export const PanelAdmin = () => {
                       type="text"
                       placeholder='Ingrese el codigo'
                       fullWidth
+                      autoComplete='off'
                       name="codigo"
                       value={otp}
                       onChange={e => setOtp(e.target.value)}

@@ -81,6 +81,7 @@ export const TemaCreate = () => {
                             name="nombre"
                             value={formData.nombre}
                             fullWidth
+                            autoComplete='off'
                             margin="normal"
                             onChange={handleChange}
                             required
@@ -124,6 +125,7 @@ export const TemaCreate = () => {
                                 type="url"
                                 value={formData.url}
                                 fullWidth
+                                autoComplete='off'
                                 onChange={handleChange}
                                 required
                                 helperText="Por favor introduce un url valido"
@@ -135,6 +137,7 @@ export const TemaCreate = () => {
                             type='number'
                             value={formData.precio}
                             fullWidth
+                            autoComplete='off'
                             margin="normal"
                             onChange={handleChange}
                             required

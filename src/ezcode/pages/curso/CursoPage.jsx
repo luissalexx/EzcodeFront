@@ -11,6 +11,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ezcodeApi from "../../../api/ezcodeApi";
 import Swal from "sweetalert2";
 import { AgendarSesion } from "./components/AgendarSesion";
+import { ChatSocket } from "./components/ChatSocket";
 
 export const CursoPage = () => {
     const tipo = localStorage.getItem('tipo');
@@ -301,12 +302,17 @@ export const CursoPage = () => {
                     <Tab label="Subir Actividad" value={4} sx={{ flexGrow: 1, color: 'white' }} />
                     <Tab label="Reseñas" value={5} sx={{ flexGrow: 1, color: 'white' }} />
                 </TabList>
-                <TabPanel value={1}>
-                    <Descripcion id={id} />
-                </TabPanel>
-                <TabPanel value={2}>
-                    <AgendarSesion id={id} />
-                </TabPanel>
+                <div className="backHome">
+                    <TabPanel value={1}>
+                        <Descripcion id={id} />
+                    </TabPanel>
+                    <TabPanel value={2}>
+                        <AgendarSesion id={id} />
+                    </TabPanel>
+                    <TabPanel value={3}>
+                        <ChatSocket id={id} />
+                    </TabPanel>
+                </div>
             </TabContext>
         </div >
     )

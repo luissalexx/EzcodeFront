@@ -263,6 +263,7 @@ export const PanelCliente = () => {
                 value={formData.nombre}
                 onChange={handleChange}
                 fullWidth
+                autoComplete='off'
                 margin="normal"
                 error={formErrors.nombre}
                 helperText={formErrors.nombre && 'Nombre es obligatorio'}
@@ -273,6 +274,7 @@ export const PanelCliente = () => {
                 value={formData.apellido}
                 onChange={handleChange}
                 fullWidth
+                autoComplete='off'
                 margin="normal"
                 error={formErrors.apellido}
                 helperText={formErrors.apellido && 'Apellido es obligatorio'}
@@ -283,6 +285,7 @@ export const PanelCliente = () => {
                   country={'mx'}
                   placeholder='Celular'
                   fullWidth
+                  autoComplete='off'
                   value={formData.celular}
                   onChange={(value) => handleChange({ target: { name: 'celular', value } })}
                   margin="normal"
@@ -299,6 +302,7 @@ export const PanelCliente = () => {
                       type="text"
                       placeholder='Ingrese el codigo'
                       fullWidth
+                      autoComplete='off'
                       name="codigo"
                       value={otp}
                       onChange={e => setOtp(e.target.value)}

@@ -165,25 +165,26 @@ export const Descripcion = ({ id }) => {
                     <Avatar src={imagen} sx={{ width: 100, height: 100 }} />
                     <input accept="image/*" style={{ display: 'none' }} id="icon-button-file" type="file" onChange={handleImageChange} />
                     <label htmlFor="icon-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span">
+                        <IconButton color="primary" aria-label="upload picture" component="span" style={{ color: 'white' }}>
                             <PhotoCameraIcon />
                         </IconButton>
                     </label>
                     <br />
                     <form onSubmit={handleFormSubmit}>
                         <TextField
-                            label="Nombre"
+                            style={{ flex: 1, marginRight: '8px', backgroundColor: 'white', borderRadius: '8px' }}
                             name="nombre"
                             value={formData.nombre}
                             fullWidth
                             margin="normal"
+                            autoComplete='off'
                             onChange={handleChange}
                             error={formErrors.nombre}
                             helperText={formErrors.nombre && 'El nombre es obligatorio'}
                         />
                         <Grid item xs={12} sx={{ mt: 2 }}>
                             <FormControl>
-                                <FormLabel id="demo-row-radio-buttons-group-label">Categoria</FormLabel>
+                                <FormLabel id="demo-row-radio-buttons-group-label" style={{ color: 'white' }}>Categoria</FormLabel>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -192,12 +193,12 @@ export const Descripcion = ({ id }) => {
                                     value={formData.categoria}
                                     defaultValue={formData.categoria}
                                 >
-                                    <FormControlLabel value="JavaScript" control={<Radio />} label="JavaScript" />
-                                    <FormControlLabel value="Java" control={<Radio />} label="Java" />
-                                    <FormControlLabel value="CSharp" control={<Radio />} label="CSharp" />
-                                    <FormControlLabel value="Python" control={<Radio />} label="Python" />
-                                    <FormControlLabel value="SQL" control={<Radio />} label="SQL" />
-                                    <FormControlLabel value="Html" control={<Radio />} label="Html" />
+                                    <FormControlLabel value="JavaScript" control={<Radio style={{ color: 'white' }} />} label="JavaScript" />
+                                    <FormControlLabel value="Java" control={<Radio style={{ color: 'white' }} />} label="Java" />
+                                    <FormControlLabel value="CSharp" control={<Radio style={{ color: 'white' }} />} label="CSharp" />
+                                    <FormControlLabel value="Python" control={<Radio style={{ color: 'white' }} />} label="Python" />
+                                    <FormControlLabel value="SQL" control={<Radio style={{ color: 'white' }} />} label="SQL" />
+                                    <FormControlLabel value="Html" control={<Radio style={{ color: 'white' }} />} label="Html" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
@@ -207,6 +208,7 @@ export const Descripcion = ({ id }) => {
                                 onChange={handleChange}
                                 name="descripcion"
                                 id="descripcion"
+                                autoComplete='off'
                                 color="neutral"
                                 value={formData.descripcion}
                                 minRows={10}

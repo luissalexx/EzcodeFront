@@ -147,6 +147,7 @@ export const RegisterPage = () => {
                     name="nombre"
                     value={nombre}
                     onChange={onInputChange}
+                    autoComplete='off'
                     error={!!nombreValid && formSubmitted}
                     helperText={nombreValid}
                   />
@@ -160,6 +161,7 @@ export const RegisterPage = () => {
                     fullWidth
                     name="apellido"
                     value={apellido}
+                    autoComplete='off'
                     onChange={onInputChange}
                     error={!!apellidoValid && formSubmitted}
                     helperText={apellidoValid}
@@ -172,6 +174,7 @@ export const RegisterPage = () => {
                     fullWidth
                     name="nacimiento"
                     value={nacimiento}
+                    autoComplete='off'
                     onChange={onInputChange}
                     error={!!nacimientoValid && formSubmitted}
                     helperText={nacimientoValid}
@@ -185,6 +188,7 @@ export const RegisterPage = () => {
                     country={'mx'}
                     placeholder='Celular'
                     fullWidth
+                    autoComplete='off'
                     name="celular"
                     value={celular}
                     onChange={(celular) => setCelular(celular)}
@@ -198,6 +202,7 @@ export const RegisterPage = () => {
                     placeholder='correo@gmail.com'
                     fullWidth
                     name="correo"
+                    autoComplete='off'
                     value={correo}
                     onChange={onInputChange}
                     error={!!correoValid && formSubmitted}
@@ -249,6 +254,7 @@ export const RegisterPage = () => {
                   type="text"
                   placeholder='Ingrese el codigo'
                   fullWidth
+                  autoComplete='off'
                   name="codigo"
                   value={otp}
                   onChange={e => setOtp(e.target.value)}

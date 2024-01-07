@@ -198,6 +198,7 @@ export const BusquedaPage = () => {
                                 sx={{ flexGrow: 1, backgroundColor: 'white', borderRadius: '20px' }}
                                 placeholder="Buscar por nombre del curso o por correo del profesor"
                                 value={termino}
+                                autoComplete='off'
                                 onChange={handleChangeBusqueda}
                                 InputProps={{
                                     startAdornment: (

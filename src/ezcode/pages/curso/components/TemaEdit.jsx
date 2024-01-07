@@ -108,6 +108,7 @@ export const TemaEdit = () => {
                             value={formData.nombre}
                             fullWidth
                             margin="normal"
+                            autoComplete='off'
                             onChange={handleChange}
                             required
                         />
@@ -138,6 +139,7 @@ export const TemaEdit = () => {
                                 type="url"
                                 value={formData.url}
                                 fullWidth
+                                autoComplete='off'
                                 onChange={handleChange}
                                 required
                                 helperText="Por favor introduce un url valido"
@@ -150,6 +152,7 @@ export const TemaEdit = () => {
                             value={formData.precio}
                             fullWidth
                             margin="normal"
+                            autoComplete='off'
                             onChange={handleChange}
                             required
                         />

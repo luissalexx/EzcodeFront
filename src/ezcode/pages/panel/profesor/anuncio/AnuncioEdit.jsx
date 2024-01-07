@@ -203,6 +203,7 @@ export const AnuncioEdit = () => {
               <TextField
                 label="Nombre"
                 name="nombre"
+                autoComplete='off'
                 value={formData.nombre}
                 fullWidth
                 margin="normal"
@@ -240,6 +241,7 @@ export const AnuncioEdit = () => {
                   value={formData.descripcion}
                   minRows={10}
                   maxRows={10}
+                  autoComplete='off'
                   style={{ fontFamily: 'Arial', fontSize: '16px', resize: 'none', width: '100%' }}
                   required
                 />
@@ -249,6 +251,7 @@ export const AnuncioEdit = () => {
                 name="precio"
                 type='number'
                 value={formData.precio}
+                autoComplete='off'
                 fullWidth
                 margin="normal"
                 onChange={handleChange}

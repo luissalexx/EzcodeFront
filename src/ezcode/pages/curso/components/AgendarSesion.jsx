@@ -87,6 +87,7 @@ export const AgendarSesion = ({ id }) => {
                 Fecha:
             </Typography>
             <TextField
+                style={{ flex: 1, marginRight: '8px', backgroundColor: 'white', borderRadius: '8px' }}
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
@@ -101,7 +102,7 @@ export const AgendarSesion = ({ id }) => {
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
                 fullWidth
-                style={{ minWidth: '100px' }}
+                style={{ minWidth: '100px', backgroundColor: 'white' }}
             >
                 {Array.from({ length: 13 }, (_, index) => {
                     const hour = index + 8;
@@ -115,9 +116,9 @@ export const AgendarSesion = ({ id }) => {
             <br />
             <br />
 
-            <Button variant="contained" color="primary" onClick={handleCreateEvent}
+            <Button variant="contained" style={{ backgroundColor: 'white', color: 'black' }} onClick={handleCreateEvent}
                 disabled={
-                    tipo === "Profesor" || !selectedDate || !selectedTime
+                    tipo === "Profesor" || isButtonDisabled || !selectedDate || !selectedTime
                 }>
                 Agendar Sesión
             </Button>
