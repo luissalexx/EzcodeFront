@@ -28,14 +28,23 @@ export const ChatSocket = ({ id }) => {
             console.log('Desconectado del servidor de Socket.io');
         });
 
-        socket.on('user joined', (joinedUserId) => {
-            console.log(`Usuario ${joinedUserId} se unió al curso`);
-        });
 
-        socket.on('chat message', (data) => {
-            console.log('Mensaje recibido:', data);
-            setMessages((prevMessages) => [...(prevMessages || []), data]);
-        });
+        try {
+            socket.on('user joined', (joinedUserId) => {
+                console.log(`Usuario ${joinedUserId} se unió al curso`);
+            });
+        } catch (error) {
+            console.log(error)
+        }
+
+        try {
+            socket.on('chat message', (data) => {
+                console.log('Mensaje recibido:', data);
+                setMessages((prevMessages) => [...(prevMessages || []), data]);
+            });
+        } catch (error) {
+            console.log(error)
+        }
 
         const loadChatHistory = async () => {
             try {
