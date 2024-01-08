@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import io from 'socket.io-client';
 import ezcodeApi from '../../../../api/ezcodeApi';
 
-const socket = io("https://ezcode-8hoq.onrender.com");
+const socket = io("https://ezcode-43gl.onrender.com");
 
 export const ChatSocket = ({ id }) => {
     const token = localStorage.getItem('token');
@@ -28,23 +28,13 @@ export const ChatSocket = ({ id }) => {
             console.log('Desconectado del servidor de Socket.io');
         });
 
+        socket.on('user joined', (joinedUserId) => {
+            console.log(`Usuario ${joinedUserId} se unió al curso`);
+        });
 
-        try {
-            socket.on('user joined', (joinedUserId) => {
-                console.log(`Usuario ${joinedUserId} se unió al curso`);
-            });
-        } catch (error) {
-            console.log(error)
-        }
-
-        try {
-            socket.on('chat message', (data) => {
-                console.log('Mensaje recibido:', data);
-                setMessages((prevMessages) => [...(prevMessages || []), data]);
-            });
-        } catch (error) {
-            console.log(error)
-        }
+        socket.on('chat message', (data) => {
+            setMessages((prevMessages) => [...(prevMessages || []), data]);
+        });
 
         const loadChatHistory = async () => {
             try {
