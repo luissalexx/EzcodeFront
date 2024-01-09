@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import io from 'socket.io-client';
 import ezcodeApi from '../../../../api/ezcodeApi';
 
-const socket = io("http://localhost:8080");
+const socket = io("https://ezcode-43gl.onrender.com");
 
 export const ChatSocket = ({ id }) => {
     const token = localStorage.getItem('token');
