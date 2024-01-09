@@ -115,13 +115,18 @@ export const AgendarSesion = ({ id }) => {
             </Select>
             <br />
             <br />
-
-            <Button variant="contained" style={{ backgroundColor: 'white', color: 'black' }} onClick={handleCreateEvent}
-                disabled={
-                    tipo === "Profesor" || isButtonDisabled || !selectedDate || !selectedTime
-                }>
-                Agendar Sesión
-            </Button>
+            {!curso.acreditado ? (
+                <Button variant="contained" style={{ backgroundColor: 'white', color: 'black' }} onClick={handleCreateEvent}
+                    disabled={
+                        tipo === "Profesor" || isButtonDisabled || !selectedDate || !selectedTime
+                    }>
+                    Agendar Sesión
+                </Button>
+            ) : (
+                <Typography variant="h6" gutterBottom>
+                    El curso esta finalizado, no se pueden agendar sesiones
+                </Typography>
+            )}
         </Container>
     );
 };

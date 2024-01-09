@@ -4,14 +4,16 @@ import { Tab, Grid, IconButton, List, ListItem, ListItemText, Paper, Typography,
 import React, { useEffect, useState } from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Descripcion } from "./components/Descripcion";
+import { AgendarSesion } from "./components/AgendarSesion";
+import { ChatSocket } from "./components/ChatSocket";
+import { SubirTarea } from "./components/SubirTarea";
+import { Reseña } from "./components/Reseña";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ezcodeApi from "../../../api/ezcodeApi";
 import Swal from "sweetalert2";
-import { AgendarSesion } from "./components/AgendarSesion";
-import { ChatSocket } from "./components/ChatSocket";
 
 export const CursoPage = () => {
     const tipo = localStorage.getItem('tipo');
@@ -130,7 +132,7 @@ export const CursoPage = () => {
             const response = await ezcodeApi.post(`drive/upload/${folderId}`, formData);
             const result = await Swal.fire({
                 title: 'Archivo subido a la carpeta',
-                text: ` Url embebida del archivo: ${response.data}`,
+                text: ` Url embebida del archivo: ${response.data.fileUrlEmbedded}`,
                 icon: "success",
                 confirmButtonText: 'Ok',
             })
@@ -272,13 +274,14 @@ export const CursoPage = () => {
                         <br />
                         {tipo === "Profesor" && curso.carpeta != '' ? (
                             <div style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                <Button variant="contained" style={{ marginRight: '20px' }} onClick={() => navigate(`/profesor/curso/tema/crear/${id}`)}>
+                                <Button disabled={curso.acreditado} variant="contained" style={{ marginRight: '20px' }} onClick={() => navigate(`/profesor/curso/tema/crear/${id}`)}>
                                     Agregar tema
                                 </Button>
                                 <br />
                                 <br />
                                 <div>
                                     <Input
+                                        disabled={curso.acreditado}
                                         type="file"
                                         onChange={handleFileChange}
                                     />
@@ -299,7 +302,7 @@ export const CursoPage = () => {
                     <Tab label="Descripción" value={1} sx={{ flexGrow: 1, color: 'white' }} />
                     <Tab label="Agendar Sesión" value={2} sx={{ flexGrow: 1, color: 'white' }} />
                     <Tab label="Chat" value={3} sx={{ flexGrow: 1, color: 'white' }} />
-                    <Tab label="Subir Actividad" value={4} sx={{ flexGrow: 1, color: 'white' }} />
+                    <Tab label="Actividades" value={4} sx={{ flexGrow: 1, color: 'white' }} />
                     <Tab label="Reseñas" value={5} sx={{ flexGrow: 1, color: 'white' }} />
                 </TabList>
                 <div className="backHome">
@@ -311,6 +314,12 @@ export const CursoPage = () => {
                     </TabPanel>
                     <TabPanel value={3}>
                         <ChatSocket id={id} />
+                    </TabPanel>
+                    <TabPanel value={4}>
+                        <SubirTarea id={id} />
+                    </TabPanel>
+                    <TabPanel value={5}>
+                        <Reseña id={id} />
                     </TabPanel>
                 </div>
             </TabContext>

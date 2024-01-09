@@ -1,10 +1,11 @@
-import { Avatar, Button, Typography } from "@mui/material"
+import { Avatar, Button, Typography, Rating } from "@mui/material"
 import { ChangeNav } from "../components/ChangeNav"
 import { Link } from 'react-scroll';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactDOMServer from 'react-dom/server';
 import Slider from 'react-slick';
+import { jwtDecode } from "jwt-decode";
 import ezcodeApi from "../../api/ezcodeApi";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -13,9 +14,15 @@ import Swal from "sweetalert2";
 export const HomePage = () => {
 
   const token = localStorage.getItem('token');
+  const decodedToken = token ? jwtDecode(token) : null;
+  const userId = decodedToken ? decodedToken.uid : null;
   const tipo = localStorage.getItem('tipo');
+
   const [anuncios, setAnuncios] = useState([]);
+  const [populares, setPopulares] = useState([]);
   const [imageUrls, setImageUrls] = useState({});
+  const [alumno, setAlumno] = useState({});
+  const [imagePopularesUrls, setImagePopularesUrls] = useState({});
   const navigate = useNavigate();
 
   const obtenerUrlImagenAnuncio = async (idAnuncio) => {
@@ -33,6 +40,11 @@ export const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (tipo === "Alumno") {
+          const response = await ezcodeApi.get(`user/${userId}`);
+          setAlumno(response.data.alumno);
+        }
+
         const anunciosResponse = await ezcodeApi.get('anuncio/published/');
         setAnuncios(anunciosResponse.data.results);
 
@@ -42,6 +54,27 @@ export const HomePage = () => {
           urls[anuncio.uid] = url;
         }
         setImageUrls(urls);
+
+      } catch (error) {
+        console.error('Error al obtener los anuncios', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const anunciosResponse = await ezcodeApi.get('anuncio/populars/');
+        setPopulares(anunciosResponse.data);
+
+        const urls = {};
+        for (const anuncio of anunciosResponse.data) {
+          const url = await obtenerUrlImagenAnuncio(anuncio.uid);
+          urls[anuncio.uid] = url;
+        }
+        setImagePopularesUrls(urls);
 
       } catch (error) {
         console.error('Error al obtener los anuncios', error);
@@ -75,6 +108,7 @@ export const HomePage = () => {
           <Typography variant='body1'>Descripcion: <br />{anuncio.descripcion}</Typography>
           <br />
           <Typography>Precio: {anuncio.precio}MXN</Typography>
+          <br />
           <hr />
           <Typography>Profesor: {anuncio.profesor.nombre}</Typography>
           <Typography>Correo: {anuncio.profesor.correo}</Typography>
@@ -153,7 +187,7 @@ export const HomePage = () => {
 
       <div name="section2" style={{ height: '100vh' }}>
         <Typography style={{ position: 'absolute', top: '115%', left: '5%', fontSize: '50px' }}>
-          Explora los cursos publicados en la pagina
+          Explora los cursos publicados en la página
         </Typography>
         <div style={{ width: '75%', margin: 'auto', position: 'absolute', top: '130%', left: '12%' }}>
           <div style={{ marginTop: '20px', padding: '20px' }}>
@@ -187,6 +221,7 @@ export const HomePage = () => {
                       <Typography style={{ fontSize: '20px' }}>
                         Profesor: {anuncio.profesor.nombre} {anuncio.profesor.apellido}
                       </Typography>
+                      <Rating name="read-only" value={anuncio.calificacion} readOnly style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px' }} />
                       <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
                         onClick={() => viewAnuncio(anuncio.uid)}>
                         Ver más
@@ -199,6 +234,59 @@ export const HomePage = () => {
           </div>
         </div>
       </div>
+      {alumno.acreditados > 4 && tipo === "Alumno" ? (
+        <div name="section3" style={{ height: '90vh' }}>
+          <div>
+            <Typography style={{ position: 'absolute', top: '200%', left: '5%', fontSize: '50px' }}>
+              Los cursos más populares
+            </Typography>
+            <div style={{ width: '75%', margin: 'auto', position: 'absolute', top: '215%', left: '12%' }}>
+              <div style={{ marginTop: '20px', padding: '20px' }}>
+                <Slider {...settings}>
+                  {populares.map((popular, index) => (
+                    <div key={index} style={{ width: '100%', boxSizing: 'border-box' }}>
+                      <div style={{ border: '2px solid white', borderRadius: '10px', overflow: 'hidden' }}>
+                        <div style={{ padding: '20px' }}>
+                          <Avatar
+                            style={{ display: 'block', margin: 'auto', height: 200, width: 200, borderRadius: '10px' }}
+                            src={imagePopularesUrls[popular.uid]}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            color: 'white',
+                            padding: '1rem'
+                          }}>
+                          <Typography style={{ fontSize: '40px' }}>
+                            {popular.nombre}
+                          </Typography>
+                          <Typography style={{ fontSize: '20px' }}>
+                            Primer tema del curso: {popular.precio}MXN
+                          </Typography>
+                          <Typography style={{ fontSize: '20px' }}>
+                            Profesor: {popular.profesor.nombre} {popular.profesor.apellido}
+                          </Typography>
+                          <Rating name="read-only" value={popular.calificacion} readOnly style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px' }} />
+                          <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
+                            onClick={() => viewAnuncio(popular.uid)}>
+                            Ver más
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (null)}
     </div>
   );
 };

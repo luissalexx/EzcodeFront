@@ -8,8 +8,8 @@ export const Descripcion = ({ id }) => {
     const tipo = localStorage.getItem('tipo');
 
     const [imagen, setImagen] = useState('');
-    const [alumno, setAlumno] = useState('');
-    const [profesor, setProfesor] = useState('');
+    const [alumno, setAlumno] = useState({});
+    const [profesor, setProfesor] = useState({});
 
     const [curso, setCurso] = useState({
         nombre: '',
@@ -151,11 +151,15 @@ export const Descripcion = ({ id }) => {
                     </Typography>
                     <br />
                     <Typography>Descripción: <br /> {curso.descripcion}</Typography>
-                    <hr />
+                    <br />
                     <Typography>
                         Profesor: {profesor.nombre} {profesor.apellido} <br />
                         Correo: {profesor.correo}
                     </Typography>
+                    <br />
+                    <hr />
+                    <br />
+                    
                 </div>
             ) : tipo === 'Profesor' && (
                 <div>
@@ -163,9 +167,9 @@ export const Descripcion = ({ id }) => {
                         Descripcion del curso
                     </Typography>
                     <Avatar src={imagen} sx={{ width: 100, height: 100 }} />
-                    <input accept="image/*" style={{ display: 'none' }} id="icon-button-file" type="file" onChange={handleImageChange} />
+                    <input disabled={curso.acreditado} accept="image/*" style={{ display: 'none' }} id="icon-button-file" type="file" onChange={handleImageChange} />
                     <label htmlFor="icon-button-file">
-                        <IconButton color="primary" aria-label="upload picture" component="span" style={{ color: 'white' }}>
+                        <IconButton disabled={curso.acreditado} color="primary" aria-label="upload picture" component="span" style={{ color: 'white' }}>
                             <PhotoCameraIcon />
                         </IconButton>
                     </label>
@@ -219,9 +223,11 @@ export const Descripcion = ({ id }) => {
                         </FormControl>
                         <br />
                         <br />
-                        <Button type="submit" variant="contained" color="secondary">
-                            Actualizar descripcion
-                        </Button>
+                        {!curso.acreditado ? (
+                            <Button type="submit" variant="contained" color="secondary">
+                                Actualizar descripcion
+                            </Button>
+                        ) : null}
                     </form>
                     <hr />
                     <Typography>
