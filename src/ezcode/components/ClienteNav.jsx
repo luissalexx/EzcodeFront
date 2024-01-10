@@ -106,6 +106,12 @@ export const ClienteNav = () => {
                         </Link>
                     </Typography>
 
+                    <Typography color='white' sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} to="/cliente/calificaciones" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            Calificaciones
+                        </Link>
+                    </Typography>
+
                     <IconButton color="inherit" onClick={handlePopoverOpen}>
                         <Badge
                             color="error"

@@ -22,6 +22,7 @@ import { ReportarUsuario } from "../pages/curso/components/ReportarUsuario"
 import { ReportesPage } from "../pages/panel/administrador/ReportesPage"
 import { ReportesUsuario } from "../pages/panel/administrador/components/ReportesUsuario"
 import { TerminosPage } from "../pages/TerminosPage"
+import { CalificacionesPage } from "../pages/panel/cliente/CalificacionesPage"
 
 
 export const EzcodeRoutes = () => {
@@ -35,6 +36,7 @@ export const EzcodeRoutes = () => {
         <Route path="/*" element={<Navigate to="/" />} />
         <Route path="/cliente/Cursos" element={<MisCursosPage />} />
         <Route path="/cliente/cursoView/:id" element={<CursoPage />} />
+        <Route path="/cliente/calificaciones" element={<CalificacionesPage />} />
         <Route path="/contacto" element={<ContactPage />} />
         <Route path="/buscar" element={<BusquedaPage />} />
         <Route path="/carrito" element={<CarritoPage />} />
