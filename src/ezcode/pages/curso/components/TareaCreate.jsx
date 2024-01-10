@@ -102,6 +102,9 @@ export const TareaCreate = () => {
                         <Button type="submit" variant="contained" color="primary">
                             Crear Tarea
                         </Button>
+                        <Button onClick={() => navigate(-1)} color="primary">
+                            Volver
+                        </Button>
                     </form>
                 </Grid>
             </Grid>

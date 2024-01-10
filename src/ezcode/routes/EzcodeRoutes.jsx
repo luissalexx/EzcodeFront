@@ -18,6 +18,10 @@ import { TemaCreate } from "../pages/curso/components/TemaCreate"
 import { TemaEdit } from "../pages/curso/components/TemaEdit"
 import { TareaCreate } from "../pages/curso/components/TareaCreate"
 import { TareaEdit } from "../pages/curso/components/TareaEdit"
+import { ReportarUsuario } from "../pages/curso/components/ReportarUsuario"
+import { ReportesPage } from "../pages/panel/administrador/ReportesPage"
+import { ReportesUsuario } from "../pages/panel/administrador/components/ReportesUsuario"
+import { TerminosPage } from "../pages/TerminosPage"
 
 
 export const EzcodeRoutes = () => {
@@ -34,6 +38,8 @@ export const EzcodeRoutes = () => {
         <Route path="/contacto" element={<ContactPage />} />
         <Route path="/buscar" element={<BusquedaPage />} />
         <Route path="/carrito" element={<CarritoPage />} />
+        <Route path="/terminos" element={<TerminosPage />} />
+        <Route path="/reportar/:idCurso" element={<ReportarUsuario />} />
       </Routes>
     )
   }
@@ -52,9 +58,11 @@ export const EzcodeRoutes = () => {
         <Route path="/profesor/curso/tema/editar/:id/:idTema" element={<TemaEdit />} />
         <Route path="/profesor/curso/tarea/crear/:id" element={<TareaCreate />} />
         <Route path="/profesor/curso/tarea/editar/:id/:tareaId" element={<TareaEdit />} />
+        <Route path="/reportar/:idCurso" element={<ReportarUsuario />} />
         <Route path="/profesor/cursoView/:id" element={<CursoPage />} />
         <Route path="/profesor/anuncio/crear" element={<AnuncioCreate />} />
         <Route path="/buscar" element={<BusquedaPage />} />
+        <Route path="/terminos" element={<TerminosPage />} />
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
     )
@@ -65,8 +73,11 @@ export const EzcodeRoutes = () => {
       <Routes>
         <Route path="/admin/" element={<PanelAdmin />} />
         <Route path="/admin/solicitudes" element={<SolicitudesPage />} />
+        <Route path="/admin/reportes" element={<ReportesPage />} />
+        <Route path="/admin/reportes/usuario/:id" element={<ReportesUsuario />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/buscar" element={<BusquedaPage />} />
+        <Route path="/terminos" element={<TerminosPage />} />
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
     )
@@ -77,6 +88,7 @@ export const EzcodeRoutes = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/buscar" element={<BusquedaPage />} />
+        <Route path="/terminos" element={<TerminosPage />} />
         <Route path="/*" element={<Navigate to="/" />} />
       </Routes>
     )

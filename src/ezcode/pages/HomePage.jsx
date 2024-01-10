@@ -10,6 +10,7 @@ import ezcodeApi from "../../api/ezcodeApi";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Swal from "sweetalert2";
+import { ChangeFootNav } from "../components/ChangeFootNav";
 
 export const HomePage = () => {
 
@@ -287,6 +288,7 @@ export const HomePage = () => {
           </div>
         </div>
       ) : (null)}
+      <ChangeFootNav />
     </div>
   );
 };

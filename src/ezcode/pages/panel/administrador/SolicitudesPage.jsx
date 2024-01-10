@@ -273,6 +273,5 @@ export const SolicitudesPage = () => {
                 </Paper>
             </Grid >
         </Box >
-
     )
 }

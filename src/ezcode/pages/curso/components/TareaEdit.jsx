@@ -120,6 +120,9 @@ export const TareaEdit = () => {
                         <Button type="submit" variant="contained" color="primary">
                             Editar Tarea
                         </Button>
+                        <Button onClick={() => navigate(-1)} color="primary">
+                            Volver
+                        </Button>
                     </form>
                 </Grid>
             </Grid>

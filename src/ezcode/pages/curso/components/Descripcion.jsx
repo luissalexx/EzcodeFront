@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ezcodeApi from "../../../../api/ezcodeApi";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export const Descripcion = ({ id }) => {
     const tipo = localStorage.getItem('tipo');
@@ -10,6 +11,7 @@ export const Descripcion = ({ id }) => {
     const [imagen, setImagen] = useState('');
     const [alumno, setAlumno] = useState({});
     const [profesor, setProfesor] = useState({});
+    const navigate = useNavigate();
 
     const [curso, setCurso] = useState({
         nombre: '',
@@ -111,7 +113,6 @@ export const Descripcion = ({ id }) => {
     const handleImageChange = async (event) => {
         const file = event.target.files[0];
 
-        // Verifica si se seleccionó un archivo
         if (file) {
             const formData = new FormData();
             formData.append('archivo', file);
@@ -159,7 +160,9 @@ export const Descripcion = ({ id }) => {
                     <br />
                     <hr />
                     <br />
-                    
+                    <Button variant="contained" color="secondary" onClick={() => navigate(`/reportar/${id}`)}>
+                        Reportar Profesor
+                    </Button>
                 </div>
             ) : tipo === 'Profesor' && (
                 <div>
@@ -234,6 +237,12 @@ export const Descripcion = ({ id }) => {
                         Alumno: {alumno.nombre} {alumno.apellido} <br />
                         Correo: {alumno.correo}
                     </Typography>
+                    <br />
+                    <hr />
+                    <br />
+                    <Button variant="contained" color="secondary" onClick={() => navigate(`/reportar/${id}`)}>
+                        Reportar Alumno
+                    </Button>
                 </div>
             )}
         </div>

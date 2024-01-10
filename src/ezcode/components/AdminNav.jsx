@@ -107,6 +107,12 @@ export const AdminNav = () => {
                         </Link>
                     </Typography>
 
+                    <Typography color='white' sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} to="/admin/reportes" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            Reportes
+                        </Link>
+                    </Typography>
+
                     <IconButton color="inherit" onClick={handlePopoverOpen}>
                         <Badge
                             color="error"

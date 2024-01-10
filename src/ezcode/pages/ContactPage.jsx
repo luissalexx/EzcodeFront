@@ -4,6 +4,7 @@ import { Box, Button, TextField, TextareaAutosize, Typography } from '@mui/mater
 import { getEnvVariables } from '../../helpers/getEnvVariables';
 import { AuthLayout } from '../../auth/layout/AuthLayout';
 import '../../styles.css'
+import { ChangeFootNav } from '../components/ChangeFootNav';
 
 export const ContactPage = () => {
     const { VITE_EMAIL_SERVICE_ID, VITE_EMAIL_TEMPLATE_ID, VITE_EMAIL_PUBLIC_ID } = getEnvVariables();
@@ -68,6 +69,7 @@ export const ContactPage = () => {
                     <Button variant='contained' fullWidth type='submit' value="Send" >Enviar</Button>
                 </form>
             </AuthLayout>
+            <ChangeFootNav />
         </Box>
     )
 }

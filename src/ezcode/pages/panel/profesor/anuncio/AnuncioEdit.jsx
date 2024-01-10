@@ -128,7 +128,7 @@ export const AnuncioEdit = () => {
           text: 'Se envió una solicitud al administrador para su revision',
           icon: 'success',
           confirmButtonText: 'Ok',
-        }).then((result) => { 
+        }).then((result) => {
           if (result.isConfirmed) {
             navigate('/profesor/anuncios', {
               replace: true
@@ -260,6 +260,9 @@ export const AnuncioEdit = () => {
               />
               <Button type="submit" variant="contained" color="secondary">
                 Actualizar Anuncio
+              </Button>
+              <Button onClick={() => navigate(-1)} color="primary">
+                Volver
               </Button>
             </form>
           </Paper>

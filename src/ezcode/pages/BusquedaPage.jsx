@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import ezcodeApi from "../../api/ezcodeApi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { ChangeFootNav } from "../components/ChangeFootNav";
 
 export const BusquedaPage = () => {
 
@@ -139,7 +140,7 @@ export const BusquedaPage = () => {
                                 confirmButtonColor: '#3085d6',
                                 confirmButtonText: 'Ok',
                             });
-                        } else { 
+                        } else {
                             Swal.fire({
                                 title: 'Ya enviaste una solicitud previamente',
                                 icon: 'error',
@@ -289,6 +290,7 @@ export const BusquedaPage = () => {
                     </Paper>
                 </Grid>
             </Grid>
+            <ChangeFootNav />
         </div>
     )
 }

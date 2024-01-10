@@ -145,6 +145,9 @@ export const AnuncioCreate = () => {
                             <Button type="submit" variant="contained" color="secondary">
                                 Crear Anuncio
                             </Button>
+                            <Button onClick={() => navigate(-1)} color="primary">
+                                Volver
+                            </Button>
                         </form>
                     </Grid>
                 </Grid>

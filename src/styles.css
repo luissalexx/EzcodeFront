@@ -42,3 +42,14 @@
     flex-direction: column;
     color: white;
 }
+
+.backTerminos {
+    background-image: url('ezcode/components/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}

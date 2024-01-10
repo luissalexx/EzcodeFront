@@ -1,3 +1,4 @@
+import { ChangeFootNav } from "./ezcode/components/ChangeFootNav"
 import { AppRouter } from "./router/AppRouter"
 import { AppTheme } from "./theme"
 
