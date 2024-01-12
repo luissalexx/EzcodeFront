@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { ClienteNav } from '../../../components/ClienteNav'
 import { jwtDecode } from "jwt-decode";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Typography } from '@mui/material';
+import { ProfeNav } from '../../../components/ProfeNav'
 import ezcodeApi from '../../../../api/ezcodeApi';
+import { Typography } from '@mui/material';
 
-export const CalificacionesPage = () => {
+export const SuscripcionesPage = () => {
     const token = localStorage.getItem('token');
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.uid;
 
-    const [cursos, setCursos] = useState([]);
+    const [anuncios, setAnuncios] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await ezcodeApi.get(`user/${userId}`);
-                const userDataFromServer = response.data.alumno;
+                const response = await ezcodeApi.get(`profesor/${userId}`);
+                const userDataFromServer = response.data.profesor;
                 if (userDataFromServer) {
                     try {
-                        const cursosResponse = await ezcodeApi.get(`busqueda/cursos/${userDataFromServer.correo}`);
-                        setCursos(cursosResponse.data.results);
+                        const anunciosResponse = await ezcodeApi.get(`busqueda/anuncios/${userDataFromServer.correo}`);
+                        setAnuncios(anunciosResponse.data.results);
                     } catch (error) {
                         console.log(error);
                     }
@@ -33,19 +33,18 @@ export const CalificacionesPage = () => {
         fetchData();
     }, []);
 
-    const dataForChart = cursos.map(curso => ({
-        nombreCurso: curso.nombre,
-        calificacion: curso.calificacion,
+    const dataForChart = anuncios.map(anuncio => ({
+        nombreAnuncio: anuncio.nombre,
+        suscripciones: anuncio.suscripciones,
     }));
 
     return (
         <div>
-
-            <ClienteNav />
+            <ProfeNav />
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
                 <br />
                 <Typography variant="h6" gutterBottom>
-                    Calificaciones por Curso
+                    Suscripciones por Anuncio
                 </Typography>
                 <br />
                 <hr />
@@ -53,14 +52,14 @@ export const CalificacionesPage = () => {
                 <ResponsiveContainer width="50%" height={600}>
                     <BarChart data={dataForChart}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="nombreCurso" angle={0} interval={0} textAnchor="end" height={100} style={{ overflow: 'visible' }} />
+                        <XAxis dataKey="nombreAnuncio" angle={0} interval={0} textAnchor="end" height={100} style={{ overflow: 'visible' }} />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar type="monotone" dataKey="calificacion" stroke="#000000" />
+                        <Bar type="monotone" dataKey="suscripciones" stroke="#000000" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>
         </div>
-    );
-};
+    )
+}

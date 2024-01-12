@@ -15,6 +15,7 @@ export const MisAnunciosPage = () => {
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.uid;
   const [anuncios, setAnuncios] = useState([]);
+  const [profesor, setProfesor] = useState([]);
   const [solicitud, setSolicitud] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [imageUrls, setImageUrls] = useState({});
@@ -43,6 +44,7 @@ export const MisAnunciosPage = () => {
         const response = await ezcodeApi.get(`profesor/${userId}`);
         const userDataFromServer = response.data.profesor;
         if (userDataFromServer) {
+          setProfesor(userDataFromServer)
           try {
             const anunciosResponse = await ezcodeApi.get(`busqueda/anuncios/${userDataFromServer.correo}`);
             setAnuncios(anunciosResponse.data.results);
@@ -162,7 +164,7 @@ export const MisAnunciosPage = () => {
                       secondaryAction={
                         <Grid>
                           <IconButton
-                            disabled={(solicitud && solicitud.data != null)}
+                            disabled={(solicitud && solicitud.data != null) || profesor.baneado}
                             edge="end"
                             aria-label="update"
                             style={{ marginRight: "8px" }}
@@ -171,6 +173,7 @@ export const MisAnunciosPage = () => {
                             <EditIcon />
                           </IconButton>
                           <IconButton
+                            disabled={profesor.baneado}
                             edge="end"
                             aria-label="delete"
                             style={{ marginRight: "8px" }}
@@ -179,7 +182,7 @@ export const MisAnunciosPage = () => {
                             <DeleteIcon />
                           </IconButton>
                           <IconButton
-                            disabled={anuncio.estado == true || (solicitud && solicitud.data != null)}
+                            disabled={anuncio.estado == true || (solicitud && solicitud.data != null) || profesor.baneado}
                             edge="end"
                             aria-label="delete"
                             style={{ marginRight: "8px" }}
@@ -239,7 +242,7 @@ export const MisAnunciosPage = () => {
             )}
           </Grid>
           <hr />
-          <Button variant="contained" onClick={() => navigate('/profesor/anuncio/crear')} style={{ marginTop: "16px" }}>
+          <Button disabled={profesor.baneado} variant="contained" onClick={() => navigate('/profesor/anuncio/crear')} style={{ marginTop: "16px" }}>
             Crear Anuncios
           </Button>
         </Paper>

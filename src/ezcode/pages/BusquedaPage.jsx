@@ -8,11 +8,16 @@ import ezcodeApi from "../../api/ezcodeApi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { ChangeFootNav } from "../components/ChangeFootNav";
+import { jwtDecode } from "jwt-decode";
 
 export const BusquedaPage = () => {
 
     const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.uid;
+
     const tipo = localStorage.getItem('tipo');
+    const [alumno, setAlumno] = useState({});
     const [categoria, setCategoria] = useState();
     const [termino, setTermino] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -53,6 +58,10 @@ export const BusquedaPage = () => {
         const fetchData = async () => {
             if (categoria) {
                 try {
+                    if (tipo === "Alumno") {
+                        const response = await ezcodeApi.get(`user/${userId}`);
+                        setAlumno(response.data.alumno);
+                    }
                     const response = await ezcodeApi.get(`busqueda/anuncios/${categoria}`);
                     const anuncios = response.data.results;
                     setAnuncios(anuncios);
@@ -226,6 +235,7 @@ export const BusquedaPage = () => {
                                             secondaryAction={
                                                 <Grid>
                                                     <IconButton
+                                                        disabled={alumno.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => viewAnuncio(anuncio.uid)}

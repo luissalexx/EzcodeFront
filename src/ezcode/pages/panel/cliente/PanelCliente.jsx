@@ -29,6 +29,7 @@ export const PanelCliente = () => {
     nacimiento: '',
     correo: '',
     sexo: '',
+    baneado: false
   });
 
   const [formData, setFormData] = useState({
@@ -69,7 +70,6 @@ export const PanelCliente = () => {
 
         if (userDataFromServer) {
           setUserData(userDataFromServer);
-          // Actualizar el estado formData con los datos originales
           setFormData({
             nombre: userDataFromServer.nombre || '',
             apellido: userDataFromServer.apellido || '',
@@ -188,7 +188,7 @@ export const PanelCliente = () => {
       if (result.isConfirmed) {
         await ezcodeApi.delete(`curso/all/${userId}`);
         await ezcodeApi.delete(`solicitudC/all/${userId}`);
-        
+
         const response = await ezcodeApi.delete(`user/${userId}`);
         if (response.status === 200) {
           Swal.fire('Borrado', 'El usuario ha sido borrado correctamente', 'success');
@@ -249,6 +249,12 @@ export const PanelCliente = () => {
                 <Typography>Celular: {userData.celular}</Typography>
                 <Typography>Correo: {userData.correo}</Typography>
                 <Typography>Genero: {userData.sexo}</Typography>
+                {userData.baneado ? (
+                  <div>
+                    <hr />
+                    <Typography>Usuario Baneado</Typography>
+                  </div>
+                ) : null}
               </>
             )}
           </Paper>
@@ -285,6 +291,7 @@ export const PanelCliente = () => {
               <div>
                 <label htmlFor="celular">Celular</label>
                 <PhoneInput
+                  disabled={userData.baneado}
                   country={'mx'}
                   placeholder='Celular'
                   fullWidth
@@ -300,7 +307,7 @@ export const PanelCliente = () => {
                   <Grid item xs={12} sx={{ mt: 2 }}>
                     <p>Si se cambia o se borra algún número del celular es necesario volver a verificarlo</p>
                     <TextField
-                      disabled={otpVerified == true}
+                      disabled={otpVerified == true || userData.baneado}
                       label="Codigo de verificacion"
                       type="text"
                       placeholder='Ingrese el codigo'
@@ -313,14 +320,14 @@ export const PanelCliente = () => {
                     <Button
                       className="success"
                       onClick={verifyCode}
-                      disabled={otpVerified == true}
+                      disabled={otpVerified == true || userData.baneado}
                     >
                       Verificar Codigo
                     </Button>
                     <Button
                       className="success"
                       onClick={sendCode}
-                      disabled={otpVerified == true || isButtonDisabled}
+                      disabled={otpVerified == true || isButtonDisabled || userData.baneado}
                     >
                       Solicitar Codigo
                     </Button>
@@ -340,7 +347,7 @@ export const PanelCliente = () => {
                   </RadioGroup>
                 </FormControl>
               </Grid>
-              <Button type="submit" variant="contained" color="secondary" disabled={otpVerified == false || formData.celular.length !== 12}>
+              <Button type="submit" variant="contained" color="secondary" disabled={otpVerified == false || formData.celular.length !== 12 || userData.baneado}>
                 Actualizar
               </Button>
             </form>

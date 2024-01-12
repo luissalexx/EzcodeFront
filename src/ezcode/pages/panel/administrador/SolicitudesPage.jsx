@@ -248,8 +248,14 @@ export const SolicitudesPage = () => {
                                                         <span style={{ marginRight: "20px" }}>
                                                             Profesor: {solicitud.profesor.nombre}
                                                         </span>
-                                                        <span>
+                                                        <span style={{ marginRight: "20px" }}>
                                                             Correo: {solicitud.profesor.correo}
+                                                        </span>
+                                                        <span style={{ marginRight: "20px" }}>
+                                                            Anuncios publicados: {solicitud.profesor.anuncios}
+                                                        </span>
+                                                        <span>
+                                                            Puntos de reporte: {solicitud.profesor.puntosReportes}
                                                         </span>
                                                     </Grid>
                                                 }

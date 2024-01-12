@@ -116,8 +116,9 @@ export const CarritoPage = () => {
 
             if (responsePago.data.links[1].rel === "approve") {
                 const result = await Swal.fire({
-                    title: 'Pago de curso completado',
-                    icon: "success",
+                    title: 'Evento Procesado',
+                    text: 'Si el pago fue completado el curso se creará automaticamente, si fue cancelado, la solicitud queda en espera de pago',
+                    icon: "info",
                     confirmButtonText: 'Ok',
                 })
                 if (result.isConfirmed) {
@@ -258,6 +259,7 @@ export const CarritoPage = () => {
                                                     </IconButton>
 
                                                     <IconButton
+                                                        disabled={solicitudAceptada.alumno.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => handlePago(solicitudAceptada.anuncio._id)}

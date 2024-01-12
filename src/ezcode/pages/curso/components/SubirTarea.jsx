@@ -15,6 +15,8 @@ export const SubirTarea = ({ id }) => {
     const navigate = useNavigate();
 
     const [curso, setCurso] = useState({});
+    const [alumno, setAlumno] = useState({});
+    const [profesor, setProfesor] = useState({});
     const [tareas, setTareas] = useState([]);
     const [tareasEntregadas, setTareasEntregadas] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -55,6 +57,14 @@ export const SubirTarea = ({ id }) => {
                 const response = await ezcodeApi.get(`curso/${id}`);
                 const courseDataFromServer = response.data.curso;
                 setCurso(courseDataFromServer);
+
+                const alumnoId = courseDataFromServer.alumno;
+                const respAlumno = await ezcodeApi.get(`user/${alumnoId}`);
+                setAlumno(respAlumno.data.alumno);
+
+                const profeId = courseDataFromServer.profesor;
+                const respProfe = await ezcodeApi.get(`profesor/${profeId}`);
+                setProfesor(respProfe.data.profesor);
 
                 const responsePendientes = await ezcodeApi.get(`curso/pendientes/${id}`);
                 setTareas(responsePendientes.data);
@@ -284,7 +294,7 @@ export const SubirTarea = ({ id }) => {
                                                 {tipo === "Profesor" ? (
                                                     <div>
                                                         <IconButton
-                                                            disabled={curso.acreditado}
+                                                            disabled={curso.acreditado || profesor.baneado}
                                                             edge="end"
                                                             aria-label="update"
                                                             style={{ marginRight: "8px" }}
@@ -293,7 +303,7 @@ export const SubirTarea = ({ id }) => {
                                                             <EditIcon />
                                                         </IconButton>
                                                         <IconButton
-                                                            disabled={curso.acreditado}
+                                                            disabled={curso.acreditado || profesor.baneado}
                                                             edge="end"
                                                             aria-label="delete"
                                                             style={{ marginRight: "8px" }}
@@ -305,7 +315,7 @@ export const SubirTarea = ({ id }) => {
                                                 ) : (
                                                     <div>
                                                         <Input
-                                                            disabled={curso.acreditado}
+                                                            disabled={curso.acreditado || alumno.baneado}
                                                             type="file"
                                                             onChange={handleFileChange}
                                                         />
@@ -361,7 +371,7 @@ export const SubirTarea = ({ id }) => {
                     )}
                     <br />
                     {tipo === "Profesor" ? (
-                        <Button disabled={curso.acreditado} variant='contained' onClick={() => navigate(`/profesor/curso/tarea/crear/${id}`)}>
+                        <Button disabled={curso.acreditado || profesor.baneado} variant='contained' onClick={() => navigate(`/profesor/curso/tarea/crear/${id}`)}>
                             Crear asignacion
                         </Button>
                     ) : null}
@@ -403,7 +413,7 @@ export const SubirTarea = ({ id }) => {
                                                                     onChange={handleCalificacionTarea}
                                                                     required
                                                                 />
-                                                                <IconButton disabled={curso.acreditado} type="submit" variant="contained" color="primary">
+                                                                <IconButton disabled={curso.acreditado || profesor.baneado} type="submit" variant="contained" color="primary">
                                                                     <CheckCircleIcon />
                                                                 </IconButton>
                                                             </form>
@@ -412,7 +422,7 @@ export const SubirTarea = ({ id }) => {
                                                 ) : (
                                                     <div>
                                                         <IconButton
-                                                            disabled={tareaEntregada.calificacion > 0}
+                                                            disabled={tareaEntregada.calificacion > 0 || alumno.baneado}
                                                             edge="end"
                                                             aria-label="delete"
                                                             style={{ marginRight: "8px" }}
@@ -475,7 +485,7 @@ export const SubirTarea = ({ id }) => {
                         <div>
                             <form onSubmit={calificarCurso}>
                                 <Typography variant='h6'>
-                                    Calificar curso
+                                    Calificar alumno
                                 </Typography>
                                 <TextField
                                     style={{
@@ -492,7 +502,7 @@ export const SubirTarea = ({ id }) => {
                                     required
                                 />
                                 <br />
-                                <Button type="submit" variant="contained" color="secondary">
+                                <Button disabled={profesor.baneado} type="submit" variant="contained" color="secondary">
                                     Subir calificación
                                 </Button>
                             </form>

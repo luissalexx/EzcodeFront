@@ -6,7 +6,8 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 export const AnuncioCreate = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [profesor, setProfesor] = useState({});
 
     const [formData, setFormData] = useState({
         nombre: '',
@@ -39,6 +40,9 @@ export const AnuncioCreate = () => {
             try {
                 const response = await ezcodeApi.post('anuncio/', formData);
                 const anuncioDataFromServer = response.data;
+
+                const respProfe = await ezcodeApi.get(`profesor/${anuncioDataFromServer.profesor._id}`);
+                setProfesor(respProfe.data.profesor);
                 if (anuncioDataFromServer) {
                     try {
                         await ezcodeApi.post('solicitudA/', { anuncio: anuncioDataFromServer.uid });
@@ -67,9 +71,16 @@ export const AnuncioCreate = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
+        let newValue = value;
+
+        if (name === 'precio') {
+            const floatValue = parseFloat(value);
+            newValue = floatValue > 200 ? '200' : floatValue.toString();
+        }
+
         setFormData((prevFormData) => ({
             ...prevFormData,
-            [name]: name === 'precio' ? parseFloat(value) : value,
+            [name]: name === 'precio' ? newValue : value,
         }));
     };
 
@@ -116,7 +127,7 @@ export const AnuncioCreate = () => {
                                 </FormControl>
                             </Grid>
                             <FormControl fullWidth>
-                                <label >Descripción</label>
+                                <label>Descripción</label>
                                 <TextareaAutosize
                                     onChange={handleChange}
                                     name="descripcion"
@@ -130,6 +141,9 @@ export const AnuncioCreate = () => {
                                     required
                                 />
                             </FormControl>
+                            <p>El precio que se le da al anuncio es la cuota que el alumno debe pagar por los servicios base que ofrece el curso: Agendar sesión, Chat y soporte de tareas.
+                                El precio maximo permitido es 200MXN. Si el precio es cero al aprobar la solicitud, el curso se creará automaticamnete
+                            </p>
                             <TextField
                                 label="Precio"
                                 name="precio"
@@ -142,7 +156,7 @@ export const AnuncioCreate = () => {
                                 error={formErrors.precio}
                                 helperText={formErrors.precio && 'El precio es obligatorio'}
                             />
-                            <Button type="submit" variant="contained" color="secondary">
+                            <Button disabled={profesor.baneado} type="submit" variant="contained" color="secondary">
                                 Crear Anuncio
                             </Button>
                             <Button onClick={() => navigate(-1)} color="primary">

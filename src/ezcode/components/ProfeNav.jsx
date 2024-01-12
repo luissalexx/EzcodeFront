@@ -118,6 +118,12 @@ export const ProfeNav = () => {
                         </Link>
                     </Typography>
 
+                    <Typography color='white' sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} to="/profesor/suscripciones" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                            Suscripciones
+                        </Link>
+                    </Typography>
+
                     <IconButton color="inherit" onClick={handlePopoverOpen}>
                         <Badge
                             color="error"

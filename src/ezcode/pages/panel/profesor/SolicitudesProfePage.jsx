@@ -11,6 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export const SolicitudesProfePage = () => {
     const [solicitudes, setsolicitudes] = useState([]);
+    const [profesor, setProfesor] = useState({});
     const [limite, setLimite] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [imageUrls, setImageUrls] = useState({});
@@ -39,6 +40,8 @@ export const SolicitudesProfePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const profeResp = await ezcodeApi.get(`profesor/${userId}`);
+                setProfesor(profeResp.data.profesor);
                 const response = await ezcodeApi.get(`solicitudC/`);
                 const solicitudes = response.data.solicitudes
                 setsolicitudes(solicitudes);
@@ -210,7 +213,7 @@ export const SolicitudesProfePage = () => {
                                                         <VisibilitySharpIcon />
                                                     </IconButton>
                                                     <IconButton
-                                                        disabled={limite > 5}
+                                                        disabled={limite > 5 || profesor.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => aceptarSolicitud(solicitud.uid)}
@@ -218,6 +221,7 @@ export const SolicitudesProfePage = () => {
                                                         <CheckSharpIcon />
                                                     </IconButton>
                                                     <IconButton
+                                                        disabled={profesor.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => denegarSolicitud(solicitud.uid)}
@@ -254,8 +258,17 @@ export const SolicitudesProfePage = () => {
                                                         <span style={{ marginRight: "20px" }}>
                                                             Alumno: {solicitud.alumno.nombre}
                                                         </span>
-                                                        <span>
+                                                        <span style={{ marginRight: "20px" }}>
                                                             Correo: {solicitud.alumno.correo}
+                                                        </span>
+                                                        <span style={{ marginRight: "20px" }}>
+                                                            Cursos acreditados: {solicitud.alumno.acreditados}
+                                                        </span>
+                                                        <span style={{ marginRight: "20px" }}>
+                                                            Desempeño academico: {solicitud.alumno.desempeno}
+                                                        </span>
+                                                        <span>
+                                                            Puntos de reportes: {solicitud.alumno.puntosReportes}
                                                         </span>
                                                     </Grid>
                                                 }

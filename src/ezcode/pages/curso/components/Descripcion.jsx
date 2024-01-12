@@ -227,7 +227,7 @@ export const Descripcion = ({ id }) => {
                         <br />
                         <br />
                         {!curso.acreditado ? (
-                            <Button type="submit" variant="contained" color="secondary">
+                            <Button disabled={profesor.baneado} type="submit" variant="contained" color="secondary">
                                 Actualizar descripcion
                             </Button>
                         ) : null}

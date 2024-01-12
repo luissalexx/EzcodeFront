@@ -110,7 +110,32 @@ export const NavAuth = () => {
                         </Link>
                     </Typography>
 
-                    {tipo == "Administrador" ? (
+                    {tipo === "Profesor" ? (
+                        <Typography color='white' sx={{ flexGrow: 1 }}>
+                            <Link variant='h6' component={RouterLink} to="/profesor/anuncios" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                                Anuncios
+                            </Link>
+                        </Typography>
+
+                    ) : null}
+
+                    {tipo === "Profesor" ? (
+                        <Typography color='white' sx={{ flexGrow: 1 }}>
+                            <Link variant='h6' component={RouterLink} to="/profesor/Cursos" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                                Mis Cursos
+                            </Link>
+                        </Typography>
+                    ) : null}
+
+                    {tipo === "Alumno" ? (
+                        <Typography color='white' sx={{ flexGrow: 1 }}>
+                            <Link variant='h6' component={RouterLink} to="/cliente/Cursos" sx={{ textDecoration: 'none', color: 'inherit' }}>
+                                Mis Cursos
+                            </Link>
+                        </Typography>
+                    ) : null}
+
+                    {tipo === "Administrador" ? (
                         null
                     ) :
                         <Typography sx={{ flexGrow: 1 }}>

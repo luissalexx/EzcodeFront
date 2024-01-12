@@ -4,6 +4,7 @@ import ezcodeApi from "../../../../api/ezcodeApi";
 import Swal from "sweetalert2";
 
 export const Reseña = ({ id }) => {
+    const tipo = localStorage.getItem('tipo');
     const [value, setValue] = useState(0);
     const [resenas, setResenas] = useState([]);
     const [anuncio, setAnuncio] = useState({});
@@ -161,34 +162,38 @@ export const Reseña = ({ id }) => {
                         </Typography>
                     )}
                 </Grid>
-                <br />
-                <hr />
-                <br />
-                <Typography variant="h4">Calificar Curso</Typography>
-                <br />
-                <p>El valor que subas formara parte de la calificacion total del anuncio ligado a este curso publicado en la pagina, solo se puede publicar la reseña una vez </p>
-                <p>Las reseñas publicadas por usuarios se mostraran en la parte superior de esta seccion del curso</p>
-                <br />
-                <form onSubmit={hanldeSubmit}>
-                    <Grid style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', width: '14%', borderRadius: '8px' }}>
-                        <Rating
-                            style={{
-                                fontSize: '50px',
-                                color: 'white'
-                            }}
-                            name="estrellas"
-                            value={value}
-                            onChange={(event, newValue) => {
-                                setValue(newValue);
-                            }}
-                        />
-                    </Grid>
-                    <br />
-                    <br />
-                    <Button type="submit" variant="contained" color="secondary">
-                        Subir Reseña
-                    </Button>
-                </form>
+                {tipo === "Alumno" ? (
+                    <div>
+                        <br />
+                        <hr />
+                        <br />
+                        <Typography variant="h4">Calificar Curso</Typography>
+                        <br />
+                        <p>El valor que subas formara parte de la calificacion total del anuncio ligado a este curso publicado en la pagina, solo se puede publicar la reseña una vez </p>
+                        <p>Las reseñas publicadas por usuarios se mostraran en la parte superior de esta seccion del curso</p>
+                        <br />
+                        <form onSubmit={hanldeSubmit}>
+                            <Grid style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', width: '14%', borderRadius: '8px' }}>
+                                <Rating
+                                    style={{
+                                        fontSize: '50px',
+                                        color: 'white'
+                                    }}
+                                    name="estrellas"
+                                    value={value}
+                                    onChange={(event, newValue) => {
+                                        setValue(newValue);
+                                    }}
+                                />
+                            </Grid>
+                            <br />
+                            <br />
+                            <Button disabled={alumno.baneado} type="submit" variant="contained" color="secondary">
+                                Subir Reseña
+                            </Button>
+                        </form>
+                    </div>
+                ) : null}
             </Grid>
         </div>
     )

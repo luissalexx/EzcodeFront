@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 export const AnuncioEdit = () => {
   const { id } = useParams();
+  const [profesor, setProfesor] = useState({});
   const [imagen, setImagen] = useState('');
   const [imagenProfe, setImagenProfe] = useState('');
   const navigate = useNavigate();
@@ -79,6 +80,8 @@ export const AnuncioEdit = () => {
         const anuncioDataFromServer = response.data.anuncio;
 
         if (anuncioDataFromServer) {
+          const respProfe = await ezcodeApi.get(`profesor/${anuncioDataFromServer.profesor._id}`);
+          setProfesor(respProfe.data.profesor);
           setAnuncioData(anuncioDataFromServer);
           setFormData({
             nombre: anuncioDataFromServer.nombre || '',
@@ -152,6 +155,8 @@ export const AnuncioEdit = () => {
       try {
         const response = await ezcodeApi.put(`uploads/anuncios/${id}`, formData);
         const nuevaImagen = response.data.imagen;
+        await ezcodeApi.post('solicitudA/', { anuncio: id });
+
         setImagen(nuevaImagen);
         window.location.reload(false);
       } catch (error) {
@@ -258,7 +263,7 @@ export const AnuncioEdit = () => {
                 error={formErrors.precio}
                 helperText={formErrors.precio && 'El precio es obligatorio'}
               />
-              <Button type="submit" variant="contained" color="secondary">
+              <Button disabled={profesor.baneado} type="submit" variant="contained" color="secondary">
                 Actualizar Anuncio
               </Button>
               <Button onClick={() => navigate(-1)} color="primary">

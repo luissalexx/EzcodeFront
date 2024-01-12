@@ -104,6 +104,7 @@ export const CursosProfe = () => {
                                             secondaryAction={
                                                 <Grid>
                                                     <IconButton
+                                                        disabled={curso.profesor.baneado}
                                                         edge="end"
                                                         aria-label="delete"
                                                         style={{ marginRight: "8px" }}

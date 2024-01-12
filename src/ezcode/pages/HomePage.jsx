@@ -108,7 +108,7 @@ export const HomePage = () => {
           <br />
           <Typography variant='body1'>Descripcion: <br />{anuncio.descripcion}</Typography>
           <br />
-          <Typography>Precio: {anuncio.precio}MXN</Typography>
+          <Typography>Precio base del curso: {anuncio.precio}MXN</Typography>
           <br />
           <hr />
           <Typography>Profesor: {anuncio.profesor.nombre}</Typography>
@@ -194,7 +194,7 @@ export const HomePage = () => {
           <div style={{ marginTop: '20px', padding: '20px' }}>
             <Slider {...settings}>
               {anuncios.map((anuncio, index) => (
-                <div key={index} style={{ width: '100%', boxSizing: 'border-box' }}>
+                <div key={index} style={{ width: '100%', height: '400px', boxSizing: 'border-box' }}>
                   <div style={{ border: '2px solid white', borderRadius: '10px', overflow: 'hidden' }}>
                     <div style={{ padding: '20px' }}>
                       <Avatar
@@ -205,6 +205,7 @@ export const HomePage = () => {
                     <div
                       style={{
                         display: 'flex',
+                        overflow: 'auto',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -217,16 +218,22 @@ export const HomePage = () => {
                         {anuncio.nombre}
                       </Typography>
                       <Typography style={{ fontSize: '20px' }}>
-                        Primer tema del curso: {anuncio.precio}MXN
+                        Precio base del curso: {anuncio.precio}MXN
                       </Typography>
                       <Typography style={{ fontSize: '20px' }}>
                         Profesor: {anuncio.profesor.nombre} {anuncio.profesor.apellido}
                       </Typography>
                       <Rating name="read-only" value={anuncio.calificacion} readOnly style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px' }} />
-                      <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
-                        onClick={() => viewAnuncio(anuncio.uid)}>
-                        Ver más
-                      </Button>
+                      {alumno.baneado ? (
+                        <Typography>
+                          No puedes ver los detalles del anuncio, tu cuenta esta baneada
+                        </Typography>
+                      ) : (
+                        <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
+                          onClick={() => viewAnuncio(anuncio.uid)}>
+                          Ver más
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -245,7 +252,7 @@ export const HomePage = () => {
               <div style={{ marginTop: '20px', padding: '20px' }}>
                 <Slider {...settings}>
                   {populares.map((popular, index) => (
-                    <div key={index} style={{ width: '100%', boxSizing: 'border-box' }}>
+                    <div key={index} style={{ width: '100%', height: '400px', boxSizing: 'border-box' }}>
                       <div style={{ border: '2px solid white', borderRadius: '10px', overflow: 'hidden' }}>
                         <div style={{ padding: '20px' }}>
                           <Avatar
@@ -257,6 +264,7 @@ export const HomePage = () => {
                           style={{
                             display: 'flex',
                             flexDirection: 'column',
+                            overflow: 'auto',
                             justifyContent: 'center',
                             alignItems: 'center',
                             gap: '1rem',
@@ -268,16 +276,22 @@ export const HomePage = () => {
                             {popular.nombre}
                           </Typography>
                           <Typography style={{ fontSize: '20px' }}>
-                            Primer tema del curso: {popular.precio}MXN
+                            Precio base del curso: {popular.precio}MXN
                           </Typography>
                           <Typography style={{ fontSize: '20px' }}>
                             Profesor: {popular.profesor.nombre} {popular.profesor.apellido}
                           </Typography>
                           <Rating name="read-only" value={popular.calificacion} readOnly style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px' }} />
-                          <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
-                            onClick={() => viewAnuncio(popular.uid)}>
-                            Ver más
-                          </Button>
+                          {alumno.baneado ? (
+                            <Typography>
+                              No puedes ver los detalles del anuncio, tu cuenta esta baneada
+                            </Typography>
+                          ) : (
+                            <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
+                              onClick={() => viewAnuncio(popular.uid)}>
+                              Ver más
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>

@@ -31,15 +31,35 @@ export const TemaCreate = () => {
         e.preventDefault();
 
         try {
-            await ezcodeApi.post(`curso/tema/${id}`, formData);
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Tema creado exitosamente!',
-                confirmButtonText: 'Ok'
-            });
+            if (formData.categoria === 'Url' && formData.url.includes('https://drive.google.com/file/d/')) {
+                await ezcodeApi.post(`curso/tema/${id}`, formData);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Tema creado exitosamente!',
+                    confirmButtonText: 'Ok'
+                });
 
-            navigate(-1);
+                navigate(-1);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Solo se permiten url embebidos de drive',
+                    confirmButtonText: 'Ok'
+                });
+            }
+
+            if (formData.categoria === 'Contenido') {
+                await ezcodeApi.post(`curso/tema/${id}`, formData);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Tema creado exitosamente!',
+                    confirmButtonText: 'Ok'
+                });
+                navigate(-1);
+            }
         } catch (error) {
             console.error('Error:', error);
             Swal.fire({

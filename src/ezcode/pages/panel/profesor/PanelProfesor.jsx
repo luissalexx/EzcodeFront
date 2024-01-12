@@ -229,7 +229,6 @@ export const PanelProfesor = () => {
     <div>
       <ProfeNav />
       <Grid container spacing={0} style={{ height: '100vh' }}>
-        {/* Columna Izquierda */}
         <Grid item xs={12} sm={4}>
           <Paper style={{ padding: 16, height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Avatar src={imagen} sx={{ width: 100, height: 100 }} />
@@ -249,11 +248,16 @@ export const PanelProfesor = () => {
                 <Typography>Celular: {userData.celular}</Typography>
                 <Typography>Correo: {userData.correo}</Typography>
                 <Typography>Genero: {userData.sexo}</Typography>
+                {userData.baneado ? (
+                  <div>
+                    <hr />
+                    <Typography>Usuario Baneado</Typography>
+                  </div>
+                ) : null}
               </>
             )}
           </Paper>
         </Grid>
-        {/* Columna Derecha */}
         <Grid item xs={12} sm={8}>
           <Paper style={{ padding: 16, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
@@ -285,6 +289,7 @@ export const PanelProfesor = () => {
               <div>
                 <label htmlFor="celular">Celular</label>
                 <PhoneInput
+                  disabled={userData.baneado}
                   country={'mx'}
                   placeholder='Celular'
                   autoComplete='off'
@@ -300,7 +305,7 @@ export const PanelProfesor = () => {
                   <Grid item xs={12} sx={{ mt: 2 }}>
                     <p>Si se cambia o se borra algún número del celular es necesario volver a verificarlo</p>
                     <TextField
-                      disabled={otpVerified == true}
+                      disabled={otpVerified == true || userData.baneado}
                       label="Codigo de verificacion"
                       type="text"
                       autoComplete='off'
@@ -313,14 +318,14 @@ export const PanelProfesor = () => {
                     <Button
                       className="success"
                       onClick={verifyCode}
-                      disabled={otpVerified == true}
+                      disabled={otpVerified == true || userData.baneado}
                     >
                       Verificar Codigo
                     </Button>
                     <Button
                       className="success"
                       onClick={sendCode}
-                      disabled={otpVerified == true || isButtonDisabled}
+                      disabled={otpVerified == true || isButtonDisabled || userData.baneado}
                     >
                       Solicitar Codigo
                     </Button>
@@ -340,7 +345,7 @@ export const PanelProfesor = () => {
                   </RadioGroup>
                 </FormControl>
               </Grid>
-              <Button type="submit" variant="contained" color="secondary" disabled={otpVerified == false || formData.celular.length !== 12}>
+              <Button type="submit" variant="contained" color="secondary" disabled={otpVerified == false || formData.celular.length !== 12 || userData.baneado}>
                 Actualizar
               </Button>
             </form>

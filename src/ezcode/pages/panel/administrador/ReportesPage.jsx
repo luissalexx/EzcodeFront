@@ -38,9 +38,11 @@ export const ReportesPage = () => {
         fetchData();
     }, []);
 
-    const banearProfe = async (profeId) => {
+    const banearProfe = async (profeId, correoProfe) => {
         try {
             const response = await ezcodeApi.put(`profesor/banear/${profeId}`);
+            const subject = encodeURIComponent('Cuenta de usuario baneada en EZCODE');
+            const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${correoProfe}&su=${subject}`;
             if (response) {
                 Swal.fire({
                     title: 'Usuario Baneado',
@@ -48,6 +50,7 @@ export const ReportesPage = () => {
                     confirmButtonText: 'Ok',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        window.open(mailtoLink, '_blank');
                         window.location.reload(false);
                     }
                 });
@@ -76,9 +79,11 @@ export const ReportesPage = () => {
         }
     }
 
-    const banearAlumno = async (alumnoId) => {
+    const banearAlumno = async (alumnoId, alumnoCorreo) => {
         try {
             const response = await ezcodeApi.put(`user/banear/${alumnoId}`);
+            const subject = encodeURIComponent('Cuenta de usuario baneada en EZCODE');
+            const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${alumnoCorreo}&su=${subject}`;
             if (response) {
                 Swal.fire({
                     title: 'Usuario Baneado',
@@ -86,6 +91,7 @@ export const ReportesPage = () => {
                     confirmButtonText: 'Ok',
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        window.open(mailtoLink, '_blank');
                         window.location.reload(false);
                     }
                 });
@@ -165,15 +171,15 @@ export const ReportesPage = () => {
                                                     </IconButton>
 
                                                     <IconButton
-                                                        disabled={profesor.puntosReportes == 5 && profesor.baneado == false}
+                                                        disabled={profesor.puntosReportes < 5 || profesor.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
-                                                        onClick={() => banearProfe(profesor.uid)}
+                                                        onClick={() => banearProfe(profesor.uid, profesor.correo)}
                                                     >
                                                         <LockIcon />
                                                     </IconButton>
                                                     <IconButton
-                                                        disabled={profesor.baneado == true}
+                                                        disabled={!(profesor.baneado)}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => desbanearProfe(profesor.uid)}
@@ -191,6 +197,9 @@ export const ReportesPage = () => {
                                                         </span>
                                                         <span style={{ flexGrow: 1 }}>
                                                             {profesor.correo}
+                                                        </span>
+                                                        <span style={{ flexGrow: 1 }}>
+                                                            Puntos de reporte: {profesor.puntosReportes}
                                                         </span>
                                                     </Grid>
                                                 }
@@ -238,15 +247,15 @@ export const ReportesPage = () => {
                                                     </IconButton>
 
                                                     <IconButton
-                                                        disabled={alumno.puntosReportes == 5 && alumno.baneado == false}
+                                                        disabled={alumno.puntosReportes < 5 || alumno.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
-                                                        onClick={() => banearAlumno(alumno.uid)}
+                                                        onClick={() => banearAlumno(alumno.uid, alumno.correo)}
                                                     >
                                                         <LockIcon />
                                                     </IconButton>
                                                     <IconButton
-                                                        disabled={alumno.baneado == true}
+                                                        disabled={!(alumno.baneado)}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => desbanearAlumno(alumno.uid)}
@@ -260,10 +269,13 @@ export const ReportesPage = () => {
                                                 primary={
                                                     <Grid style={{ display: "flex" }}>
                                                         <span style={{ flexGrow: 1 }}>
-                                                            Usuario: {alumno.nombre}
+                                                            Usuario: {alumno.nombre} {alumno.apellido}
                                                         </span>
                                                         <span style={{ flexGrow: 1 }}>
                                                             {alumno.correo}
+                                                        </span>
+                                                        <span style={{ flexGrow: 1 }}>
+                                                            Puntos de reporte: {alumno.puntosReportes}
                                                         </span>
                                                     </Grid>
                                                 }
