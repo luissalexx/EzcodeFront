@@ -41,8 +41,9 @@ export const AnuncioCreate = () => {
                 const response = await ezcodeApi.post('anuncio/', formData);
                 const anuncioDataFromServer = response.data;
 
-                const respProfe = await ezcodeApi.get(`profesor/${anuncioDataFromServer.profesor._id}`);
+                const respProfe = await ezcodeApi.get(`profesor/${anuncioDataFromServer.profesor}`);
                 setProfesor(respProfe.data.profesor);
+
                 if (anuncioDataFromServer) {
                     try {
                         await ezcodeApi.post('solicitudA/', { anuncio: anuncioDataFromServer.uid });

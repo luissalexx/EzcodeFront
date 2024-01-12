@@ -108,15 +108,14 @@ export const MisAnunciosPage = () => {
       });
 
       if (result.isConfirmed) {
-        await ezcodeApi.delete(`anuncio/${anuncioId}`);
         try {
           const response = await ezcodeApi.get(`solicitudA/${anuncioId}`);
-
           if (response && response.data) {
             await ezcodeApi.delete(`solicitudA/${response.data.uid}`);
           }
+          await ezcodeApi.delete(`anuncio/${anuncioId}`);
         } catch (error) {
-          console.error('Error al intentar eliminar la solicitudA:', error);
+          console.error(error);
         }
         window.location.reload(false);
       }
