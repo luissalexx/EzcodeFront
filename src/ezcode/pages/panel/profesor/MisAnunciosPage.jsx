@@ -110,6 +110,7 @@ export const MisAnunciosPage = () => {
       if (result.isConfirmed) {
         try {
           const response = await ezcodeApi.get(`solicitudA/${anuncioId}`);
+
           if (response && response.data) {
             await ezcodeApi.delete(`solicitudA/${response.data.uid}`);
           }
