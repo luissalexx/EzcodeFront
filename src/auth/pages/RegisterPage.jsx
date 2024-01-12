@@ -43,8 +43,6 @@ export const RegisterPage = () => {
     nombreValid, apellidoValid, nacimientoValid, correoValid
   } = useForm(formData, formValidations);
 
-
-
   const submitCliente = async (event) => {
     event.preventDefault();
     setFormSubmitted(true)
@@ -122,6 +120,9 @@ export const RegisterPage = () => {
     }
   }
 
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+  const maxDateString = maxDate.toISOString().split('T')[0];
 
   return (
     <Box>
@@ -167,8 +168,8 @@ export const RegisterPage = () => {
                     helperText={apellidoValid}
                   />
                 </Grid>
-
                 <Grid item xs={12} sx={{ mt: 2 }}>
+                  <Typography>Fecha de nacimiento: </Typography>
                   <TextField
                     type="date"
                     fullWidth
@@ -178,6 +179,7 @@ export const RegisterPage = () => {
                     onChange={onInputChange}
                     error={!!nacimientoValid && formSubmitted}
                     helperText={nacimientoValid}
+                    inputProps={{ max: maxDateString }}
                   />
                 </Grid>
 
