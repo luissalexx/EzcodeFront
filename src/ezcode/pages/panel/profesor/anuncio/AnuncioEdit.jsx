@@ -37,7 +37,6 @@ export const AnuncioEdit = () => {
     nombre: false,
     descripcion: false,
     categoria: false,
-    precio: false,
   });
 
   useEffect(() => {
@@ -260,8 +259,6 @@ export const AnuncioEdit = () => {
                 fullWidth
                 margin="normal"
                 onChange={handleChange}
-                error={formErrors.precio}
-                helperText={formErrors.precio && 'El precio es obligatorio'}
               />
               <Button disabled={profesor.baneado} type="submit" variant="contained" color="secondary">
                 Actualizar Anuncio

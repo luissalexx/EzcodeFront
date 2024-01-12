@@ -20,7 +20,6 @@ export const AnuncioCreate = () => {
         nombre: false,
         descripcion: false,
         categoria: false,
-        precio: false,
     });
 
     const handleFormSubmit = async (e) => {
@@ -154,8 +153,6 @@ export const AnuncioCreate = () => {
                                 fullWidth
                                 margin="normal"
                                 onChange={handleChange}
-                                error={formErrors.precio}
-                                helperText={formErrors.precio && 'El precio es obligatorio'}
                             />
                             <Button disabled={profesor.baneado} type="submit" variant="contained" color="secondary">
                                 Crear Anuncio
