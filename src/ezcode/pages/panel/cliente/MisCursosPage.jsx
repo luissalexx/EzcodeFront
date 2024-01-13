@@ -80,7 +80,7 @@ export const MisCursosPage = () => {
 
             if (confirmationResult.isConfirmed) {
 
-                if (curso.carpeta != "") {
+                if (curso.carpeta && curso.carpeta !== "") {
                     const downloadResult = await Swal.fire({
                         title: 'Quieres descargar la carpeta de drive?',
                         text: 'Seras enviado un link de drive para descargar la carpeta',
