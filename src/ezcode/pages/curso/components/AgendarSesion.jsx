@@ -61,12 +61,16 @@ export const AgendarSesion = ({ id }) => {
 
             const url = response.data.url;
 
-            Swal.fire({
+            const result = await Swal.fire({
                 title: 'Sesión agendada en Meet',
-                text: `Evento de meeet en calendar creado exitosamente, url del evento: ${url}`,
+                text: `Evento de meeet en tu cuenta de calendar creado exitosamente, url del evento: ${url}`,
                 icon: 'success',
                 confirmButtonText: 'Ok',
             });
+
+            if (result.isConfirmed) {
+                window.location.reload(false);
+            }
         } catch (error) {
             console.error('Error creating event:', error);
             setIsButtonDisabled(false);
