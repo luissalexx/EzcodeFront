@@ -80,20 +80,22 @@ export const MisCursosPage = () => {
 
             if (confirmationResult.isConfirmed) {
 
-                const downloadResult = await Swal.fire({
-                    title: 'Quieres descargar la carpeta de drive?',
-                    text: 'Seras enviado un link de drive para descargar la carpeta',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Continuar',
-                    cancelButtonText: 'Cancelar',
-                });
+                if (curso.carpeta != "") {
+                    const downloadResult = await Swal.fire({
+                        title: 'Quieres descargar la carpeta de drive?',
+                        text: 'Seras enviado un link de drive para descargar la carpeta',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Continuar',
+                        cancelButtonText: 'Cancelar',
+                    });
 
-                if (downloadResult.isConfirmed) {
-                    const linkResponse = await ezcodeApi.get(`drive/link/${curso.carpeta}`);
-                    const driveFolderLink = linkResponse.data.link;
-                    window.open(driveFolderLink, '_blank');
+                    if (downloadResult.isConfirmed) {
+                        const linkResponse = await ezcodeApi.get(`drive/link/${curso.carpeta}`);
+                        const driveFolderLink = linkResponse.data.link;
+                        window.open(driveFolderLink, '_blank');
+                    }
                 }
 
 
