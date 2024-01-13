@@ -240,11 +240,11 @@ export const SolicitudesPage = () => {
                                                         </span>
                                                         {!solicitud.anuncio.precio ? (
                                                             <span style={{ flexGrow: 1 }}>
-                                                                Gratis
+                                                                Precio: Gratis
                                                             </span>
                                                         ) : (
                                                             <span style={{ flexGrow: 1 }}>
-                                                                {solicitud.anuncio.precio}
+                                                                Precio: {solicitud.anuncio.precio}MXN
                                                             </span>
                                                         )}
                                                     </Grid>
