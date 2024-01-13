@@ -52,9 +52,6 @@ export const MisAnunciosPage = () => {
             for (const anuncio of anunciosResponse.data.results) {
               const url = await obtenerUrlImagenAnuncio(anuncio.uid);
               urls[anuncio.uid] = url;
-              const solicitud = await ezcodeApi.get(`solicitudA/${anuncio.uid}`);
-              setSolicitud(solicitud);
-
             }
             setImageUrls(urls);
           } catch (error) {
@@ -164,7 +161,7 @@ export const MisAnunciosPage = () => {
                       secondaryAction={
                         <Grid>
                           <IconButton
-                            disabled={(solicitud && solicitud.data != null) || profesor.baneado}
+                            disabled={profesor.baneado}
                             edge="end"
                             aria-label="update"
                             style={{ marginRight: "8px" }}
@@ -182,7 +179,7 @@ export const MisAnunciosPage = () => {
                             <DeleteIcon />
                           </IconButton>
                           <IconButton
-                            disabled={anuncio.estado == true || (solicitud && solicitud.data != null) || profesor.baneado}
+                            disabled={anuncio.estado == true || profesor.baneado}
                             edge="end"
                             aria-label="delete"
                             style={{ marginRight: "8px" }}

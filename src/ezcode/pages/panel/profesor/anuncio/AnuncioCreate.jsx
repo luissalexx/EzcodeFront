@@ -13,7 +13,7 @@ export const AnuncioCreate = () => {
         nombre: '',
         descripcion: '',
         categoria: '',
-        precio: 0,
+        precio: 1,
     });
 
     const [formErrors, setFormErrors] = useState({
@@ -43,16 +43,9 @@ export const AnuncioCreate = () => {
                 const respProfe = await ezcodeApi.get(`profesor/${anuncioDataFromServer.profesor}`);
                 setProfesor(respProfe.data.profesor);
 
-                if (anuncioDataFromServer) {
-                    try {
-                        await ezcodeApi.post('solicitudA/', { anuncio: anuncioDataFromServer.uid });
-                    } catch (error) {
-                        console.log(error)
-                    }
-                }
                 Swal.fire({
                     title: 'Anuncio creado con éxito',
-                    text: 'Se envió una solicitud al administrador para su revision',
+                    text: 'Cambia la imagen base de tu anuncio para enviarlo a su revisión',
                     icon: 'success',
                     confirmButtonText: 'Ok',
                 }).then((result) => {
@@ -75,7 +68,7 @@ export const AnuncioCreate = () => {
 
         if (name === 'precio') {
             const floatValue = parseFloat(value);
-            newValue = floatValue > 200 ? '200' : floatValue.toString();
+            newValue = floatValue < 0 ? '0' : (floatValue > 200 ? '200' : floatValue.toString());
         }
 
         setFormData((prevFormData) => ({

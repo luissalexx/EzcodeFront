@@ -108,7 +108,15 @@ export const HomePage = () => {
           <br />
           <Typography variant='body1'>Descripcion: <br />{anuncio.descripcion}</Typography>
           <br />
-          <Typography>Precio base del curso: {anuncio.precio}MXN</Typography>
+          {!anuncio.precio ? (
+            <Typography style={{ fontSize: '20px' }}>
+              Precio base del curso: Gratis
+            </Typography>
+          ) : (
+            <Typography style={{ fontSize: '20px' }}>
+              Precio base del curso: {anuncio.precio}MXN
+            </Typography>
+          )}
           <br />
           <hr />
           <Typography>Profesor: {anuncio.profesor.nombre}</Typography>
@@ -217,9 +225,15 @@ export const HomePage = () => {
                       <Typography style={{ fontSize: '40px' }}>
                         {anuncio.nombre}
                       </Typography>
-                      <Typography style={{ fontSize: '20px' }}>
-                        Precio base del curso: {anuncio.precio}MXN
-                      </Typography>
+                      {!anuncio.precio ? (
+                        <Typography style={{ fontSize: '20px' }}>
+                          Precio base del curso: Gratis
+                        </Typography>
+                      ) : (
+                        <Typography style={{ fontSize: '20px' }}>
+                          Precio base del curso: {anuncio.precio}MXN
+                        </Typography>
+                      )}
                       <Typography style={{ fontSize: '20px' }}>
                         Profesor: {anuncio.profesor.nombre} {anuncio.profesor.apellido}
                       </Typography>
@@ -275,9 +289,15 @@ export const HomePage = () => {
                           <Typography style={{ fontSize: '40px' }}>
                             {popular.nombre}
                           </Typography>
-                          <Typography style={{ fontSize: '20px' }}>
-                            Precio base del curso: {popular.precio}MXN
-                          </Typography>
+                          {!popular.precio ? (
+                            <Typography style={{ fontSize: '20px' }}>
+                              Precio base del curso: Gratis
+                            </Typography>
+                          ) : (
+                            <Typography style={{ fontSize: '20px' }}>
+                              Precio base del curso: {popular.precio}MXN
+                            </Typography>
+                          )}
                           <Typography style={{ fontSize: '20px' }}>
                             Profesor: {popular.profesor.nombre} {popular.profesor.apellido}
                           </Typography>

@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 export const AnuncioEdit = () => {
   const { id } = useParams();
   const [profesor, setProfesor] = useState({});
+  const [solicitud, setSolicitud] = useState({});
   const [imagen, setImagen] = useState('');
   const [imagenProfe, setImagenProfe] = useState('');
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export const AnuncioEdit = () => {
     nombre: '',
     descripcion: '',
     categoria: '',
-    precio: 1,
+    precio: 0,
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -77,8 +78,10 @@ export const AnuncioEdit = () => {
       try {
         const response = await ezcodeApi.get(`anuncio/${id}`);
         const anuncioDataFromServer = response.data.anuncio;
-
         if (anuncioDataFromServer) {
+          const responseSolicitud = await ezcodeApi.get(`solicitudA/${id}`);
+          setSolicitud(responseSolicitud.data);
+
           const respProfe = await ezcodeApi.get(`profesor/${anuncioDataFromServer.profesor._id}`);
           setProfesor(respProfe.data.profesor);
           setAnuncioData(anuncioDataFromServer);
@@ -86,7 +89,7 @@ export const AnuncioEdit = () => {
             nombre: anuncioDataFromServer.nombre || '',
             descripcion: anuncioDataFromServer.descripcion || '',
             categoria: anuncioDataFromServer.categoria || '',
-            precio: anuncioDataFromServer.precio || '',
+            precio: anuncioDataFromServer.precio,
           });
         } else {
           console.error('No se encontraron datos de usuario en la respuesta del servidor');
@@ -104,7 +107,7 @@ export const AnuncioEdit = () => {
 
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: name === 'precio' ? parseFloat(value) : value,
+      [name]: name === 'precio' ? (value === null || value === '' ? 0 : Math.max(0, parseFloat(value))) : value,
     }));
   };
 
@@ -114,7 +117,7 @@ export const AnuncioEdit = () => {
     // Validaciones de formulario
     const errors = {};
     Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
+      if (!formData[key] && key !== 'precio') {
         errors[key] = true;
       }
     });
@@ -124,10 +127,12 @@ export const AnuncioEdit = () => {
     if (Object.keys(errors).length === 0) {
       try {
         const response = await ezcodeApi.put(`anuncio/details/${id}`, formData);
-        await ezcodeApi.post('solicitudA/', { anuncio: id });
+        if (response) {
+          await ezcodeApi.post('solicitudA/', { anuncio: id });
+        }
         Swal.fire({
           title: 'Datos actualizados con éxito',
-          text: 'Se envió una solicitud al administrador para su revision',
+          text: 'Se envió una solicitud al administrador para su revision. No podrás actualizar el anuncio hasta que se revise la solicitud',
           icon: 'success',
           confirmButtonText: 'Ok',
         }).then((result) => {
@@ -173,7 +178,7 @@ export const AnuncioEdit = () => {
             <Avatar src={imagen} sx={{ width: 100, height: 100 }} />
             <input accept="image/*" style={{ display: 'none' }} id="icon-button-file" type="file" onChange={handleImageChange} />
             <label htmlFor="icon-button-file">
-              <IconButton color="primary" aria-label="upload picture" component="span">
+              <IconButton disabled={profesor.baneado || solicitud} color="primary" aria-label="upload picture" component="span">
                 <PhotoCameraIcon />
               </IconButton>
             </label>
@@ -250,17 +255,22 @@ export const AnuncioEdit = () => {
                   required
                 />
               </FormControl>
-              <TextField
-                label="Precio"
-                name="precio"
-                type='number'
-                value={formData.precio}
-                autoComplete='off'
-                fullWidth
-                margin="normal"
-                onChange={handleChange}
-              />
-              <Button disabled={profesor.baneado} type="submit" variant="contained" color="secondary">
+              <div>
+                <br />
+                <Typography>
+                  Precio
+                </Typography>
+                <TextField
+                  name="precio"
+                  type='number'
+                  value={formData.precio}
+                  autoComplete='off'
+                  fullWidth
+                  margin="normal"
+                  onChange={handleChange}
+                />
+              </div>
+              <Button disabled={profesor.baneado || solicitud} type="submit" variant="contained" color="secondary">
                 Actualizar Anuncio
               </Button>
               <Button onClick={() => navigate(-1)} color="primary">

@@ -238,9 +238,15 @@ export const SolicitudesPage = () => {
                                                         <span style={{ flexGrow: 1 }}>
                                                             Categoría: {solicitud.anuncio.categoria}
                                                         </span>
-                                                        <span style={{ flexGrow: 1 }}>
-                                                            Precio: {solicitud.anuncio.precio}MXN
-                                                        </span>
+                                                        {!solicitud.anuncio.precio ? (
+                                                            <span style={{ flexGrow: 1 }}>
+                                                                Gratis
+                                                            </span>
+                                                        ) : (
+                                                            <span style={{ flexGrow: 1 }}>
+                                                                {solicitud.anuncio.precio}
+                                                            </span>
+                                                        )}
                                                     </Grid>
                                                 }
                                                 secondary={
