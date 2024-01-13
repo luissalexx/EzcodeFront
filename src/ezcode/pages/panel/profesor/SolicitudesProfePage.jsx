@@ -143,7 +143,7 @@ export const SolicitudesProfePage = () => {
             cancelButtonText: 'Cancelar',
         });
         if (result.isConfirmed) {
-            const response = await ezcodeApi.put(`solicitudC/get/${idSolicitud}`);
+            const response = await ezcodeApi.put(`solicitudC/${idSolicitud}`);
             if (response) {
                 try {
                     const result = await Swal.fire({
