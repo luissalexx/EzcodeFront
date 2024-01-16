@@ -3,8 +3,9 @@ import emailjs from '@emailjs/browser';
 import { Box, Button, TextField, TextareaAutosize, Typography } from '@mui/material';
 import { getEnvVariables } from '../../helpers/getEnvVariables';
 import { AuthLayout } from '../../auth/layout/AuthLayout';
-import '../../styles.css'
 import { ChangeFootNav } from '../components/ChangeFootNav';
+import Swal from "sweetalert2";
+import '../../styles.css'
 
 export const ContactPage = () => {
     const { VITE_EMAIL_SERVICE_ID, VITE_EMAIL_TEMPLATE_ID, VITE_EMAIL_PUBLIC_ID } = getEnvVariables();
@@ -31,7 +32,13 @@ export const ContactPage = () => {
 
         emailjs.sendForm(VITE_EMAIL_SERVICE_ID, VITE_EMAIL_TEMPLATE_ID, form.current, VITE_EMAIL_PUBLIC_ID)
             .then((result) => {
-                console.log(result.text);
+                Swal.fire({
+                    title: 'Correo enviado al administrador',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    window.location.reload(false);
+                });
             }, (error) => {
                 console.log(error.text);
             });
