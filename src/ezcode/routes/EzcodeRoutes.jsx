@@ -79,6 +79,7 @@ export const EzcodeRoutes = () => {
         <Route path="/admin/solicitudes" element={<SolicitudesPage />} />
         <Route path="/admin/reportes" element={<ReportesPage />} />
         <Route path="/admin/reportes/usuario/:id" element={<ReportesUsuario />} />
+        <Route path="/admin/cursoView/:id" element={<CursoPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/buscar" element={<BusquedaPage />} />
         <Route path="/terminos" element={<TerminosPage />} />

@@ -147,7 +147,7 @@ export const Descripcion = ({ id }) => {
                     <br />
                     <Typography>Categoria: {curso.categoria}</Typography>
                     <Typography>
-                        Estatus: {curso.acreditado ? "Acreditado" : "No acreditado"}
+                        Estatus: {curso.acreditado ? "Terminado" : "Activo"}
                         <span style={{ color: curso.acreditado ? "green" : "red", marginLeft: 5 }}>{'\u25CF'}</span>
                     </Typography>
                     <br />

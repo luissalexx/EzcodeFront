@@ -156,18 +156,19 @@ export const PanelCliente = () => {
   const verifyCode = async (event) => {
     event.preventDefault();
     try {
-      const data = await ezcodeApi.post('auth/verify-code', { celular: formData.celular, otp: otp })
-      setOtpVerified(true)
-      console.log(data)
-      Swal.fire({
-        title: "Celular verificado!",
-        icon: "success"
-      });
+      const response = await ezcodeApi.post('auth/verify-code', { celular: formData.celular, otp: otp })
+      if (response.data.status === "approved") {
+        setOtpVerified(true);
+        Swal.fire({
+          title: "Celular verificado!",
+          icon: "success"
+        });
+      }
     } catch (error) {
       Swal.fire({
-        title: "Hubo un problema con el codigo introducido",
-        text: { error },
-        icon: "success"
+        title: "Hubo un problema al procesar la solicitud",
+        text: error.response.data.message,
+        icon: "error"
       });
     }
   }

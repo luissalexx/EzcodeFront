@@ -36,6 +36,12 @@ export const FootNavNotAuth = () => {
                         </Link>
                     </Typography>
 
+                    <Typography sx={{ flexGrow: 1 }}>
+                        <Link variant='h6' component={RouterLink} color='inherit' to="/auth/registro" sx={{ textDecoration: 'none' }}>
+                            Dar Clases
+                        </Link>
+                    </Typography>
+
                     <a
                         href="https://www.instagram.com/eze.code?igsh=MTFxeHQwYWpvYTM2"
                         target="_blank"

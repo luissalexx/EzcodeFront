@@ -197,7 +197,7 @@ export const MisCursosPage = () => {
                                                             Categoría: {curso.categoria}
                                                         </span>
                                                         <span style={{ flexGrow: 1 }}>
-                                                            Estatus: {curso.acreditado ? "Acreditado" : "No acreditado"}
+                                                            Estatus: {curso.acreditado ? "Terminado" : "Activo"}
                                                             <span style={{ color: curso.acreditado ? "green" : "red", marginLeft: 5 }}>{'\u25CF'}</span>
                                                         </span>
                                                     </Grid>

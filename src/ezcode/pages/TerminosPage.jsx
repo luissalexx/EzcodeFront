@@ -95,7 +95,7 @@ export const TerminosPage = () => {
                 </List>
                 <br />
                 <Typography variant="h5">8. Ley Aplicable:</Typography>
-                <Typography variant="body1">Estos términos y condiciones se rigen por las leyes del [país o región] y cualquier disputa estará sujeta a la jurisdicción exclusiva de los tribunales de [ciudad].</Typography>
+                <Typography variant="body1">Estos términos y condiciones se rigen por las leyes de México y cualquier disputa estará sujeta a la jurisdicción exclusiva de los tribunales de Guadalajara.</Typography>
                 <br />
                 <Typography variant="body1">Gracias por elegir EZECODE. Si tienes alguna pregunta o inquietud, no dudes en ponerte en contacto con nuestro equipo de soporte.</Typography>
                 <br />

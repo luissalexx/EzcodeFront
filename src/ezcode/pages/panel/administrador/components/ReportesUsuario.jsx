@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import ezcodeApi from '../../../../../api/ezcodeApi';
 import { Button, Grid, IconButton, List, ListItem, ListItemText, Pagination, Paper, Typography } from '@mui/material';
+import FolderIcon from '@mui/icons-material/Folder';
 import Swal from 'sweetalert2';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReactDOMServer from 'react-dom/server';
@@ -12,6 +13,7 @@ export const ReportesUsuario = () => {
     const { id } = useParams();
     const [reportes, setReportes] = useState([]);
     const [usuario, setUsuario] = useState({});
+
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
 
@@ -22,6 +24,13 @@ export const ReportesUsuario = () => {
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value);
+    };
+
+    const verCarpeta = async (curso) => {
+        const response = await ezcodeApi.get(`curso/${curso}`);
+        const idCarpeta = response.data.curso.carpeta;
+        const enlaceConId = `https://drive.google.com/drive/folders/${idCarpeta}?usp=drive_link`;
+        window.open(enlaceConId, '_blank');
     };
 
     useEffect(() => {
@@ -178,6 +187,14 @@ export const ReportesUsuario = () => {
                                             }}
                                             secondaryAction={
                                                 <Grid>
+                                                    <IconButton
+                                                        edge="end"
+                                                        aria-label="delete"
+                                                        style={{ marginRight: "8px" }}
+                                                        onClick={() => verCarpeta(reporte.curso)}
+                                                    >
+                                                        <FolderIcon />
+                                                    </IconButton>
                                                     <IconButton
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}

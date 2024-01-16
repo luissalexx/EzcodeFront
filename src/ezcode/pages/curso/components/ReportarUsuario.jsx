@@ -50,7 +50,7 @@ export const ReportarUsuario = () => {
         e.preventDefault();
 
         try {
-            const response = await ezcodeApi.post(`profesor/reporte/${profesor.uid}`, formData);
+            const response = await ezcodeApi.post(`profesor/reporte/${profesor.uid}/${idCurso}`, formData);
             if (response) {
                 const reporte = response.data;
                 sumarPuntosProfe(reporte);
@@ -74,7 +74,7 @@ export const ReportarUsuario = () => {
         e.preventDefault();
 
         try {
-            const response = await ezcodeApi.post(`user/reporte/${alumno.uid}`, formData);
+            const response = await ezcodeApi.post(`user/reporte/${alumno.uid}/${idCurso}`, formData);
             if (response) {
                 const reporte = response.data;
                 sumarPuntosAlumno(reporte);
