@@ -13,8 +13,8 @@ import { jwtDecode } from "jwt-decode";
 export const BusquedaPage = () => {
 
     const token = localStorage.getItem('token');
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.uid;
+    const decodedToken = token ? jwtDecode(token) : null;
+    const userId = decodedToken ? decodedToken.uid : null;
 
     const tipo = localStorage.getItem('tipo');
     const [alumno, setAlumno] = useState({});
