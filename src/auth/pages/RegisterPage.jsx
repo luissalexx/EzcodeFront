@@ -54,10 +54,10 @@ export const RegisterPage = () => {
         replace: true
       });
     } catch (error) {
-      const msg = JSON.stringify(error.response.data.errors)
+      const errorMessage = error.response.data.errors[0].msg;
       Swal.fire({
         title: 'Hubo un error al registrarse',
-        text: msg,
+        text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok'
       })
@@ -76,10 +76,10 @@ export const RegisterPage = () => {
         replace: true
       });
     } catch (error) {
-      const msg = JSON.stringify(error.response.data.errors)
+      const errorMessage = error.response.data.errors[0].msg;
       Swal.fire({
         title: 'Hubo un error al registrarse',
-        text: msg,
+        text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Ok'
       })

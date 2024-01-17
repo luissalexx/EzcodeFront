@@ -12,7 +12,6 @@ import { jwtDecode } from 'jwt-decode';
 export const SolicitudesProfePage = () => {
     const [solicitudes, setsolicitudes] = useState([]);
     const [profesor, setProfesor] = useState({});
-    const [limite, setLimite] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [imageUrls, setImageUrls] = useState({});
 
@@ -68,7 +67,7 @@ export const SolicitudesProfePage = () => {
 
         const result = await Swal.fire({
             title: '¿Estás seguro?',
-            text: 'Estás a punto de denegar este anuncio. Esta acción no se puede deshacer.',
+            text: 'Estás a punto de denegar este curso. Esta acción no se puede deshacer.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -79,13 +78,13 @@ export const SolicitudesProfePage = () => {
         if (result.isConfirmed) {
             try {
                 await ezcodeApi.delete(`solicitudC/${idSolicitud}`);
-                const result = await Swal.fire({
+                const resultado = await Swal.fire({
                     title: 'Solicitud Denegada',
                     icon: 'success',
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'Continuar',
                 })
-                if (result.isConfirmed) {
+                if (resultado.isConfirmed) {
                     window.open(mailtoLink, '_blank');
                     window.location.reload(false);
                 }
@@ -128,10 +127,6 @@ export const SolicitudesProfePage = () => {
     }
 
     const aceptarSolicitud = async (idSolicitud) => {
-        const profeResp = await ezcodeApi.get(`profesor/${userId}`);
-        const limite = profeResp.data.profesor.limiteCurso
-        setLimite(limite);
-
         const result = await Swal.fire({
             title: '¿Estás seguro?',
             text: 'Estás a punto de aprobar esta solicitud. Esta acción no se puede deshacer.',
@@ -213,7 +208,7 @@ export const SolicitudesProfePage = () => {
                                                         <VisibilitySharpIcon />
                                                     </IconButton>
                                                     <IconButton
-                                                        disabled={limite > 5 || profesor.baneado}
+                                                        disabled={profesor.limiteCursos >= 5 || profesor.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => aceptarSolicitud(solicitud.uid)}
@@ -221,7 +216,7 @@ export const SolicitudesProfePage = () => {
                                                         <CheckSharpIcon />
                                                     </IconButton>
                                                     <IconButton
-                                                        disabled={profesor.baneado}
+                                                        disabled={profesor.limiteCursos >= 5 || profesor.baneado}
                                                         edge="end"
                                                         sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
                                                         onClick={() => denegarSolicitud(solicitud.uid)}

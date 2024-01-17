@@ -16,12 +16,11 @@ export const MisAnunciosPage = () => {
   const userId = decodedToken.uid;
   const [anuncios, setAnuncios] = useState([]);
   const [profesor, setProfesor] = useState([]);
-  const [solicitud, setSolicitud] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [imageUrls, setImageUrls] = useState({});
   const navigate = useNavigate();
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 7;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedAnuncios = anuncios.slice(startIndex, endIndex);
@@ -74,8 +73,7 @@ export const MisAnunciosPage = () => {
     const solicitud = await ezcodeApi.get(`solicitudA/${anuncioId}`);
     if (solicitud.data == null) {
       try {
-        const solicitudNueva = await ezcodeApi.post(`solicitudA/`, { anuncio: anuncioId });
-        setSolicitud(solicitudNueva);
+        await ezcodeApi.post(`solicitudA/`, { anuncio: anuncioId });
         const result = await Swal.fire({
           title: 'Solicitud enviada',
           icon: 'success',

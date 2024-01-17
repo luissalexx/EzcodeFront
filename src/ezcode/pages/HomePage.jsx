@@ -80,6 +80,7 @@ export const HomePage = () => {
           setAlumno(response.data.alumno);
           const anunciosResponse = await ezcodeApi.get(`anuncio/frequent/${userId}`);
           setFrecuentes(anunciosResponse.data);
+          console.log(anunciosResponse.data);
         }
 
         const anunciosResponse = await ezcodeApi.get('anuncio/published/');
@@ -125,7 +126,7 @@ export const HomePage = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: Math.min(5, anuncios.length),
+    slidesToShow: 1,
     slidesToScroll: 1,
   };
 
@@ -257,12 +258,12 @@ export const HomePage = () => {
         <Typography style={{ position: 'absolute', top: '180%', left: '1%', fontSize: '50px' }}>
           Explora los cursos publicados en la página
         </Typography>
-        {frecuentes.length < 3 ? (
+        {frecuentes.length < 1 ? (
           <div style={{ width: '75%', margin: 'auto', position: 'absolute', top: '195%', left: '12%' }}>
             <div style={{ marginTop: '20px', padding: '20px' }}>
               <Slider {...settings}>
                 {anuncios.map((anuncio, index) => (
-                  <div key={index} style={{ width: '100%', height: '400px', boxSizing: 'border-box' }}>
+                  <div key={index} style={{ maxWidth: '300px', height: '400px', boxSizing: 'border-box' }}>
                     <div style={{ border: '2px solid white', borderRadius: '10px', overflow: 'hidden' }}>
                       <div style={{ padding: '20px' }}>
                         <Avatar
@@ -316,76 +317,81 @@ export const HomePage = () => {
             </div>
           </div>
         ) : (
-          <div style={{ width: '75%', margin: 'auto', position: 'absolute', top: '195%', left: '12%' }}>
-            <div style={{ marginTop: '20px', padding: '20px' }}>
-              <Slider {...settings}>
-                {frecuentes.map((frecuente, index) => (
-                  <div key={index} style={{ width: '100%', height: '400px', boxSizing: 'border-box' }}>
-                    <div style={{ border: '2px solid white', borderRadius: '10px', overflow: 'hidden' }}>
-                      <div style={{ padding: '20px' }}>
-                        <Avatar
-                          style={{ display: 'block', margin: 'auto', height: 200, width: 200, borderRadius: '10px' }}
-                          src={imageUrls[frecuente.uid]}
-                        />
-                      </div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          overflow: 'auto',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          gap: '1rem',
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                          color: 'white',
-                          padding: '1rem'
-                        }}>
-                        <Typography style={{ fontSize: '40px' }}>
-                          {frecuente.nombre}
-                        </Typography>
-                        {!frecuente.precio ? (
+          <div>
+            <Typography variant='h5' style={{ position: 'absolute', top: '190%', left: '1%' }}>
+              Recomendados por categorias mas frecuentes en tu cuenta
+            </Typography>
+            <div style={{ width: '75%', margin: 'auto', position: 'absolute', top: '195%', left: '12%' }}>
+              <div style={{ marginTop: '20px', padding: '20px' }}>
+                <Slider {...settings}>
+                  {frecuentes.map((frecuente, index) => (
+                    <div key={index} style={{ maxWidth: '300px', height: '400px', boxSizing: 'border-box' }}>
+                      <div style={{ border: '2px solid white', borderRadius: '10px', overflow: 'hidden' }}>
+                        <div style={{ padding: '20px' }}>
+                          <Avatar
+                            style={{ display: 'block', margin: 'auto', height: 200, width: 200, borderRadius: '10px' }}
+                            src={imageUrls[frecuente.uid]}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            overflow: 'auto',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            color: 'white',
+                            padding: '1rem'
+                          }}>
+                          <Typography style={{ fontSize: '40px' }}>
+                            {frecuente.nombre}
+                          </Typography>
+                          {!frecuente.precio ? (
+                            <Typography style={{ fontSize: '20px' }}>
+                              Precio base del curso: Gratis
+                            </Typography>
+                          ) : (
+                            <Typography style={{ fontSize: '20px' }}>
+                              Precio base del curso: {frecuente.precio}MXN
+                            </Typography>
+                          )}
                           <Typography style={{ fontSize: '20px' }}>
-                            Precio base del curso: Gratis
+                            Profesor: {frecuente.profesor.nombre} {frecuente.profesor.apellido}
                           </Typography>
-                        ) : (
-                          <Typography style={{ fontSize: '20px' }}>
-                            Precio base del curso: {frecuente.precio}MXN
-                          </Typography>
-                        )}
-                        <Typography style={{ fontSize: '20px' }}>
-                          Profesor: {frecuente.profesor.nombre} {frecuente.profesor.apellido}
-                        </Typography>
-                        <Rating name="read-only" value={frecuente.calificacion} readOnly style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px' }} />
-                        {alumno.baneado ? (
-                          <Typography>
-                            No puedes ver los detalles del anuncio, tu cuenta esta baneada
-                          </Typography>
-                        ) : (
-                          <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
-                            onClick={() => viewAnuncio(frecuente.uid)}>
-                            Ver más
-                          </Button>
-                        )}
+                          <Rating name="read-only" value={frecuente.calificacion} readOnly style={{ color: 'white', fontSize: '40px', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px' }} />
+                          {alumno.baneado ? (
+                            <Typography>
+                              No puedes ver los detalles del anuncio, tu cuenta esta baneada
+                            </Typography>
+                          ) : (
+                            <Button variant="contained" style={{ borderRadius: '10px', border: '2px solid white' }}
+                              onClick={() => viewAnuncio(frecuente.uid)}>
+                              Ver más
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </Slider>
+                  ))}
+                </Slider>
+              </div>
             </div>
           </div>
         )}
       </div>
-      {alumno.acreditados > 4 && tipo === "Alumno" ? (
+      {alumno.acreditados >= 5 && tipo === "Alumno" ? (
         <div name="section3" style={{ height: '90vh' }}>
           <div>
-            <Typography style={{ position: 'absolute', top: '250%', left: '5%', fontSize: '50px' }}>
+            <Typography style={{ position: 'absolute', top: '260%', left: '5%', fontSize: '50px' }}>
               Los cursos más populares
             </Typography>
-            <div style={{ width: '75%', margin: 'auto', position: 'absolute', top: '215%', left: '12%' }}>
+            <div style={{ width: '75%', margin: 'auto', position: 'absolute', top: '275%', left: '12%' }}>
               <div style={{ marginTop: '20px', padding: '20px' }}>
                 <Slider {...settings}>
                   {populares.map((popular, index) => (
-                    <div key={index} style={{ width: '100%', height: '400px', boxSizing: 'border-box' }}>
+                    <div key={index} style={{ maxWidth: '300px', height: '400px', boxSizing: 'border-box' }}>
                       <div style={{ border: '2px solid white', borderRadius: '10px', overflow: 'hidden' }}>
                         <div style={{ padding: '20px' }}>
                           <Avatar

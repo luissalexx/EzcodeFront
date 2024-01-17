@@ -4,6 +4,7 @@ import { ChangeNav } from "../components/ChangeNav"
 import ReactDOMServer from 'react-dom/server';
 import ezcodeApi from "../../api/ezcodeApi";
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
+import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import PaymentIcon from '@mui/icons-material/Payment';
 import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
@@ -107,6 +108,35 @@ export const CarritoPage = () => {
         }
     }
 
+    const borrarSolicitud = async (idSolicitud) => {
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Estás a punto de borrar esta solicitud. Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Continuar',
+            cancelButtonText: 'Cancelar',
+        });
+        if (result.isConfirmed) {
+            try {
+                await ezcodeApi.delete(`solicitudC/${idSolicitud}`);
+                const resultado = await Swal.fire({
+                    title: 'Solicitud borrada',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Continuar',
+                })
+                if (resultado.isConfirmed) {
+                    window.location.reload(false);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
     const handlePago = async (idAnuncio) => {
         try {
             const response = await ezcodeApi.get(`anuncio/${idAnuncio}`);
@@ -178,6 +208,14 @@ export const CarritoPage = () => {
                                                         onClick={() => viewAnuncio(solicitud.anuncio._id)}
                                                     >
                                                         <VisibilitySharpIcon />
+                                                    </IconButton>
+                                                    <IconButton
+                                                        disabled={solicitud.alumno.baneado}
+                                                        edge="end"
+                                                        sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
+                                                        onClick={() => borrarSolicitud(solicitud.uid)}
+                                                    >
+                                                        <ClearSharpIcon />
                                                     </IconButton>
                                                 </Grid>
                                             }
@@ -257,7 +295,6 @@ export const CarritoPage = () => {
                                                     >
                                                         <VisibilitySharpIcon />
                                                     </IconButton>
-
                                                     <IconButton
                                                         disabled={solicitudAceptada.alumno.baneado}
                                                         edge="end"
@@ -265,6 +302,14 @@ export const CarritoPage = () => {
                                                         onClick={() => handlePago(solicitudAceptada.anuncio._id)}
                                                     >
                                                         <PaymentIcon />
+                                                    </IconButton>
+                                                    <IconButton
+                                                        disabled={solicitudAceptada.alumno.baneado}
+                                                        edge="end"
+                                                        sx={{ marginRight: "8px", backgroundColor: "#000000", color: "white" }}
+                                                        onClick={() => borrarSolicitud(solicitudAceptada.uid)}
+                                                    >
+                                                        <ClearSharpIcon />
                                                     </IconButton>
                                                 </Grid>
                                             }
