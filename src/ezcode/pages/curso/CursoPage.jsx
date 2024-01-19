@@ -130,17 +130,27 @@ export const CursoPage = () => {
             formData.append('archivo', file);
 
             const response = await ezcodeApi.post(`drive/upload/${folderId}`, formData);
+            const url = response.data.fileUrlEmbedded
+
             const result = await Swal.fire({
                 title: 'Archivo subido a la carpeta',
-                text: ` Url embebida del archivo: ${response.data.fileUrlEmbedded}`,
-                icon: "success",
-                confirmButtonText: 'Ok',
-            })
+                icon: 'success',
+                confirmButtonText: 'Crear tema con el archivo',
+                showCancelButton: true,
+                cancelButtonText: 'Continuar'
+            });
+
             if (result.isConfirmed) {
-                window.location.reload(false);
+                navigate(`/profesor/curso/tema/crear/${id}/${encodeURIComponent(url)}`)
             }
+
         } catch (err) {
-            console.error('Error uploading file:', err);
+            Swal.fire({
+                title: `${err.response.data.msg}`,
+                text: 'Extensiones compatibles: jpg, jpeg, png, pdf, mp4, docx, pptx, xlsx',
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            });
         }
     };
 
@@ -274,7 +284,7 @@ export const CursoPage = () => {
                         <br />
                         {tipo === "Profesor" && curso.carpeta != '' ? (
                             <div style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                <Button disabled={curso.acreditado} variant="contained" style={{ marginRight: '20px' }} onClick={() => navigate(`/profesor/curso/tema/crear/${id}`)}>
+                                <Button disabled={curso.acreditado} variant="contained" style={{ marginRight: '20px' }} onClick={() => navigate(`/profesor/curso/crearTema/${id}`)}>
                                     Agregar tema
                                 </Button>
                                 <br />

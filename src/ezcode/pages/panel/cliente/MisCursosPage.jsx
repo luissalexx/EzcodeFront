@@ -98,7 +98,6 @@ export const MisCursosPage = () => {
                     }
                 }
 
-
                 await ezcodeApi.delete(`curso/${idCurso}`);
 
                 const successResult = await Swal.fire({

@@ -27,10 +27,28 @@ export const ReportesUsuario = () => {
     };
 
     const verCarpeta = async (curso) => {
-        const response = await ezcodeApi.get(`curso/${curso}`);
-        const idCarpeta = response.data.curso.carpeta;
-        const enlaceConId = `https://drive.google.com/drive/folders/${idCarpeta}?usp=drive_link`;
-        window.open(enlaceConId, '_blank');
+        try {
+            const response = await ezcodeApi.get(`curso/${curso}`);
+            const idCarpeta = response.data.curso.carpeta;
+
+            if (!idCarpeta) {
+                Swal.fire({
+                    title: 'Carpeta del curso sin crear',
+                    icon: 'info',
+                    confirmButtonText: 'Ok',
+                })
+            } else {
+                const enlaceConId = `https://drive.google.com/drive/folders/${idCarpeta}?usp=drive_link`;
+                window.open(enlaceConId, '_blank');
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'No se puede acceder a la carpeta',
+                text: 'El curso que tenia la carpeta ya no existe',
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            })
+        }
     };
 
     useEffect(() => {

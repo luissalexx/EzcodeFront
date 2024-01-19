@@ -7,13 +7,13 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 export const TemaCreate = () => {
-    const { id } = useParams();
+    const { id, url } = useParams();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         nombre: '',
         contenido: '',
-        url: '',
+        url: url,
         precio: 0,
         categoria: 'Contenido'
     });

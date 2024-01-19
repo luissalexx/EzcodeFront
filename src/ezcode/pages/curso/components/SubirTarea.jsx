@@ -186,8 +186,10 @@ export const SubirTarea = ({ id }) => {
             formData.append('archivo', file);
 
             const response = await ezcodeApi.post(`drive/upload/${folderId}`, formData);
+
             const fileUrl = response.data.fileUrl;
             const fileId = response.data.fileId;
+
             const result = await Swal.fire({
                 title: 'Archivo subido a la carpeta',
                 icon: "success",
@@ -197,8 +199,14 @@ export const SubirTarea = ({ id }) => {
                 await ezcodeApi.put(`curso/tarea/${id}/${tareaId}`, { url: fileUrl, archivoId: fileId });
                 window.location.reload(false);
             }
+
         } catch (err) {
-            console.error('Error uploading file:', err);
+            Swal.fire({
+                title: `${err.response.data.msg}`,
+                text: 'Extensiones compatibles: jpg, jpeg, png, pdf, mp4, docx, pptx, xlsx',
+                icon: 'error',
+                confirmButtonText: 'Ok',
+            });
         }
     };
 
@@ -371,7 +379,7 @@ export const SubirTarea = ({ id }) => {
                     )}
                     <br />
                     {tipo === "Profesor" ? (
-                        <Button disabled={curso.acreditado || profesor.baneado} variant='contained' onClick={() => navigate(`/profesor/curso/tarea/crear/${id}`)}>
+                        <Button disabled={curso.acreditado || profesor.baneado || !curso.carpeta} variant='contained' onClick={() => navigate(`/profesor/curso/tarea/crear/${id}`)}>
                             Crear asignacion
                         </Button>
                     ) : null}
