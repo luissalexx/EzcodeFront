@@ -31,23 +31,24 @@ export const TemaCreate = () => {
         e.preventDefault();
 
         try {
-            if (formData.categoria === 'Url' && formData.url.includes('https://drive.google.com/file/d/')) {
-                await ezcodeApi.post(`curso/tema/${id}`, formData);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Tema creado exitosamente!',
-                    confirmButtonText: 'Ok'
-                });
-
-                navigate(-1);
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Solo se permiten url embebidos de drive',
-                    confirmButtonText: 'Ok'
-                });
+            if (formData.categoria === 'Url') {
+                if (formData.url.includes('https://drive.google.com/file/d/')) {
+                    await ezcodeApi.post(`curso/tema/${id}`, formData);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Tema creado exitosamente!',
+                        confirmButtonText: 'Ok'
+                    });
+                    navigate(-1);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Solo se permiten url embebidos de drive',
+                        confirmButtonText: 'Ok'
+                    });
+                }
             }
 
             if (formData.categoria === 'Contenido') {
@@ -176,3 +177,4 @@ export const TemaCreate = () => {
         </div>
     )
 }
+
