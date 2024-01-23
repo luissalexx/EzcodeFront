@@ -24,10 +24,10 @@ export const TemaEdit = () => {
                 const temaDataFromServer = response.data.temaEncontrado;
 
                 if (temaDataFromServer) {
-                    
-                    if (temaDataFromServer.url !== '') {
+
+                    if (temaDataFromServer.url) {
                         setCategoria('Url')
-                    } else if (temaDataFromServer.contenido !== '') {
+                    } else if (temaDataFromServer.contenido) {
                         setCategoria('Contenido')
                     }
 
@@ -51,20 +51,45 @@ export const TemaEdit = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-
         try {
-            await ezcodeApi.put(`curso/tema/${id}/${idTema}`, formData);
-            Swal.fire({
-                title: 'Datos actualizados con éxito',
-                icon: 'success',
-                confirmButtonText: 'Ok',
-            }).then((result) => {
-                if (result.isConfirmed) {
+            if (categoria === 'Url') {
+                if (formData.url.includes('https://drive.google.com/file/d/')) {
+                    await ezcodeApi.put(`curso/tema/${id}/${idTema}`, formData);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Tema editado exitosamente!',
+                        confirmButtonText: 'Ok'
+                    });
                     navigate(-1);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Solo se permiten url embebidos de drive',
+                        confirmButtonText: 'Ok'
+                    });
                 }
-            });
+            }
+
+            if (categoria === 'Contenido') {
+                await ezcodeApi.put(`curso/tema/${id}/${idTema}`, formData);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Tema editado exitosamente!',
+                    confirmButtonText: 'Ok'
+                });
+                navigate(-1);
+            }
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al editar el tema. Inténtelo de nuevo.',
+                confirmButtonText: 'Ok'
+            });
         }
     };
 
@@ -112,7 +137,7 @@ export const TemaEdit = () => {
                             onChange={handleChange}
                             required
                         />
-                        {categoria === 'Contenido' && (
+                        {categoria === 'Contenido' ? (
                             <FormControl fullWidth>
                                 <label>Texto</label>
                                 <TextareaAutosize
@@ -131,8 +156,8 @@ export const TemaEdit = () => {
                                     required
                                 />
                             </FormControl>
-                        )}
-                        {categoria === 'Url' && (
+                        ) : null}
+                        {categoria === 'Url' ? (
                             <TextField
                                 label="Url"
                                 name="url"
@@ -144,7 +169,7 @@ export const TemaEdit = () => {
                                 required
                                 helperText="Por favor introduce un url valido"
                             />
-                        )}
+                        ) : null}
                         <TextField
                             label="Precio"
                             name="precio"
@@ -170,3 +195,4 @@ export const TemaEdit = () => {
         </div>
     )
 }
+
