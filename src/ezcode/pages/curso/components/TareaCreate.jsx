@@ -177,6 +177,3 @@ export const TemaCreate = () => {
         </div>
     )
 }
-
-    )
-}
