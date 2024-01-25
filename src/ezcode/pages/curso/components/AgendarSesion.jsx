@@ -63,7 +63,7 @@ export const AgendarSesion = ({ id }) => {
 
             const result = await Swal.fire({
                 title: 'Sesión agendada en Meet',
-                text: `Evento de meeet en tu cuenta de calendar creado exitosamente, url del evento: ${url}`,
+                html: `Evento de meet en tu cuenta de calendar creado exitosamente, URL del evento: <a href="${url}" target="_blank">${url}</a>`,
                 icon: 'success',
                 confirmButtonText: 'Ok',
             });
