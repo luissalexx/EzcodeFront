@@ -52,7 +52,7 @@ export const SuscripcionesPage = () => {
                 <ResponsiveContainer width="50%" height={600}>
                     <BarChart data={dataForChart}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="nombreAnuncio" angle={0} interval={0} textAnchor="end" height={100} style={{ overflow: 'visible' }} />
+                        <XAxis dataKey="nombreAnuncio" tick={false} angle={0} interval={0} textAnchor="end" height={100} style={{ overflow: 'visible' }} />
                         <YAxis />
                         <Tooltip />
                         <Legend />
