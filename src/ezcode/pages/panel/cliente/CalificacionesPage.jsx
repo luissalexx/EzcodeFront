@@ -53,7 +53,7 @@ export const CalificacionesPage = () => {
                 <ResponsiveContainer width="50%" height={600}>
                     <BarChart data={dataForChart}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="nombreCurso" angle={0} interval={0} textAnchor="end" height={100} style={{ overflow: 'visible' }} />
+                        <XAxis dataKey="nombreCurso" tick={false} angle={0} interval={0} textAnchor="end" height={100} style={{ overflow: 'visible' }} />
                         <YAxis />
                         <Tooltip />
                         <Legend />
